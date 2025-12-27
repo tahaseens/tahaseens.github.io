@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="./static/style.css">
+    <link rel="icon" href="./static/tab-icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tahaseen? shaik.</title>
+  </head>
+  
+  <body scroll="no">
+    <div class="tile">
+      <img src="./static/tile-big.png" alt="tile">
+    </div>
+    <div class="hamburger" id="hamburger">☰</div>
+    <nav class="menu" id="menu">
+    </nav>
+    <div class="name">
+      <b>
+        <p>tahaseen<br>طحسین<br>తహసీన్</p>
+      </b>
+      <a href="https://www.linkedin.com/in/tashaik">
+        <img src="./static/linkedin.png" width="50" height="50" alt="linkedin" align="right">
+      </a>
+    </div>
+    <script>
+      const hamburger = document.getElementById('hamburger');
+      const menu = document.getElementById('menu');
+      hamburger.addEventListener('click', () => {
+        menu.classList.toggle('open');
+      });
+    </script>
+  </body>
+</html>
