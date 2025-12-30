@@ -60,7 +60,7 @@ body {
   right: 0;
   height: 100%;
   width: 0;
-  background: rgba(0,0,0,0.9);
+  background: rgba(28,28,52,0.7);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -72,7 +72,7 @@ body {
 }
 
 .menu a {
-  color: white;
+  color: #c1caa4;
   text-decoration: none;
   font-size: 1.5rem;
   margin: 1rem;
