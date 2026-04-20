@@ -32,22 +32,13 @@
         <a href="https://www.linkedin.com/in/tashaik" target="_blank">
           <img src="./static/linkedin.png" width="50" height="50" alt="linkedin">
         </a>
-        <button class="substack-btn" id="substack-btn" aria-label="Subscribe on Substack">
+        <a href="https://shaiklist.substack.com" target="_blank" class="substack-link" aria-label="Subscribe on Substack">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z" fill="currentColor"/>
           </svg>
-        </button>
+        </a>
       </div>
     </div>
-
-    <!-- Substack modal -->
-    <div class="substack-modal" id="substack-modal">
-      <div class="substack-modal-inner">
-        <button class="substack-modal-close" id="substack-modal-close">✕</button>
-        <iframe src="https://shaiklist.substack.com/embed" width="480" height="320" style="border: 1px solid #EEE; background: white" frameborder="0" scrolling="no"></iframe>
-      </div>
-    </div>
-    <div class="substack-backdrop" id="substack-backdrop"></div>
 
     <!-- Disclaimer -->
     <footer class="disclaimer">
@@ -55,7 +46,6 @@
     </footer>
 
     <script>
-      // Hamburger / nav menu
       const hamburger = document.getElementById('hamburger');
       const menu = document.getElementById('menu');
       const overlay = document.getElementById('menu-overlay');
@@ -75,25 +65,6 @@
       hamburger.addEventListener('click', openMenu);
       menuClose.addEventListener('click', closeMenu);
       overlay.addEventListener('click', closeMenu);
-
-      // Substack modal
-      const substackBtn = document.getElementById('substack-btn');
-      const substackModal = document.getElementById('substack-modal');
-      const substackBackdrop = document.getElementById('substack-backdrop');
-      const substackClose = document.getElementById('substack-modal-close');
-
-      function openSubstack() {
-        substackModal.classList.add('open');
-        substackBackdrop.classList.add('open');
-      }
-      function closeSubstack() {
-        substackModal.classList.remove('open');
-        substackBackdrop.classList.remove('open');
-      }
-
-      substackBtn.addEventListener('click', openSubstack);
-      substackClose.addEventListener('click', closeSubstack);
-      substackBackdrop.addEventListener('click', closeSubstack);
     </script>
   </body>
 </html>

@@ -53,22 +53,18 @@ body {
   transform: scale(1.1);
 }
 
-/* Substack icon button */
-.substack-btn {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
+/* Substack direct link */
+.substack-link {
   color: #c1caa4;
-  width: 50px;
-  height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 50px;
+  height: 50px;
   transition: transform 0.2s ease, color 0.2s ease;
 }
 
-.substack-btn:hover {
+.substack-link:hover {
   transform: scale(1.1);
   color: #ffffff;
 }
@@ -130,7 +126,6 @@ body {
   top: 0;
   right: 0;
   height: 100%;
-  /* Cover the entire right name section (55vw) plus generous buffer */
   width: 0;
   background: rgba(20, 20, 40, 0.92);
   backdrop-filter: blur(16px);
@@ -175,7 +170,6 @@ body {
 
 .menu a:hover {
   color: #ffffff;
-  text-decoration: none;
 }
 
 /* Close button inside nav */
@@ -198,79 +192,16 @@ body {
   transform: scale(1.15);
 }
 
-/* ── Substack modal ── */
-.substack-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(10, 10, 20, 0.65);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  z-index: 3000;
-}
-
-.substack-backdrop.open {
-  opacity: 1;
-  pointer-events: all;
-}
-
-.substack-modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -48%) scale(0.95);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  z-index: 3100;
-}
-
-.substack-modal.open {
-  opacity: 1;
-  pointer-events: all;
-  transform: translate(-50%, -50%) scale(1);
-}
-
-.substack-modal-inner {
-  position: relative;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
-}
-
-.substack-modal-close {
-  position: absolute;
-  top: 8px;
-  right: 10px;
-  background: rgba(255,255,255,0.85);
-  border: none;
-  font-size: 1rem;
-  cursor: pointer;
-  color: #333;
-  padding: 2px 8px;
-  border-radius: 4px;
-  z-index: 10;
-  line-height: 1.4;
-  transition: background 0.2s ease;
-}
-
-.substack-modal-close:hover {
-  background: #fff;
-}
-
-/* ── Footer disclaimer ── */
+/* ── Footer disclaimer — bottom-left, away from hamburger ── */
 .disclaimer {
   position: fixed;
   bottom: 14px;
-  right: 7rem;
+  left: 20px;
   font-family: Arial, sans-serif;
   font-size: 0.75rem;
   color: rgba(193, 202, 164, 0.45);
   pointer-events: none;
   z-index: 100;
-  text-align: right;
 }
 
 .disclaimer a {
@@ -302,16 +233,12 @@ body {
   .links-row {
     justify-content: center;
   }
-  .substack-modal-inner iframe {
-    width: calc(100vw - 48px);
-    max-width: 480px;
-  }
   .menu.open {
     width: 100vw;
     border-left: none;
   }
   .disclaimer {
-    right: 10px;
+    left: 10px;
     bottom: 10px;
   }
 }
