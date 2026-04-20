@@ -13,6 +13,7 @@ body {
   height: 100vh;
   width: 100vw;
   overflow: hidden;
+  position: relative;
 }
 
 .tile {
@@ -42,31 +43,34 @@ body {
   margin-top: 16px;
 }
 
-.links-row a img {
-  width: 50px;
-  height: 50px;
-  transition: transform 0.2s ease;
-  display: block;
-}
-
-.links-row a img:hover {
-  transform: scale(1.1);
-}
-
-/* Substack direct link */
-.substack-link {
-  color: #c1caa4;
+/* Shared icon button style */
+.icon-link {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 50px;
-  height: 50px;
-  transition: transform 0.2s ease, color 0.2s ease;
+  width: 46px;
+  height: 46px;
+  border-radius: 8px;
+  border: 2px solid currentColor;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  text-decoration: none;
 }
 
-.substack-link:hover {
+.icon-link:hover {
   transform: scale(1.1);
-  color: #ffffff;
+  opacity: 0.85;
+}
+
+/* LinkedIn — green outline */
+.linkedin-link {
+  color: #c1caa4;
+  border-color: #c1caa4;
+}
+
+/* Substack — same palette, filled icon */
+.substack-link {
+  color: #c1caa4;
+  border-color: #c1caa4;
 }
 
 /* ── Hamburger button ── */
@@ -199,15 +203,13 @@ body {
   left: 20px;
   font-family: Arial, sans-serif;
   font-size: 0.75rem;
-  color: rgba(193, 202, 164, 0.45);
-  pointer-events: none;
-  z-index: 100;
+  color: rgba(193, 202, 164, 0.8);
+  z-index: 2500;
 }
 
 .disclaimer a {
-  color: rgba(193, 202, 164, 0.6);
+  color: rgba(193, 202, 164, 0.8);
   text-decoration: underline;
-  pointer-events: all;
   transition: color 0.2s ease;
 }
 
