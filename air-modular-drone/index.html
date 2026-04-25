@@ -1,57 +1,441 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIR Modular Drone — tahaseen shaik</title>
+    <title>AIR: Modular Drone — tahaseen shaik</title>
+    <link rel="stylesheet" href="/static/subpage.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
     <style>
-      body {
-        background-color: #1c1c34;
-        margin: 0;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        font-family: Arial, sans-serif;
-        color: #c1caa4;
+      :root {
+        --sage: #c1caa4;
+        --sage-dim: rgba(193, 202, 164, 0.45);
+        --sage-faint: rgba(193, 202, 164, 0.1);
+        --bg: #1c1c34;
+        --surface: rgba(193, 202, 164, 0.04);
+        --border: rgba(193, 202, 164, 0.13);
       }
-      .label {
+
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+        background-color: var(--bg);
+        color: var(--sage);
+        font-family: 'DM Sans', sans-serif;
+        min-height: 100vh;
+        display: block;
+        align-items: unset;
+        justify-content: unset;
+        padding: 0;
+      }
+
+      /* ── Noise overlay ── */
+      body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.6;
+      }
+
+      /* ── Layout ── */
+      .page {
+        position: relative;
+        z-index: 1;
+        max-width: 860px;
+        margin: 0 auto;
+        padding: clamp(3rem, 8vw, 5rem) clamp(1.25rem, 5vw, 3rem) 5rem;
+      }
+
+      /* ── Back button ── */
+      .back {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-family: 'DM Mono', monospace;
         font-size: 0.65rem;
-        letter-spacing: 0.18em;
+        letter-spacing: 0.16em;
         text-transform: uppercase;
-        color: rgba(193, 202, 164, 0.45);
+        color: var(--sage-dim);
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        margin-bottom: 3.5rem;
+        transition: color 0.2s;
+      }
+      .back:hover { color: var(--sage); }
+      .back svg { transition: transform 0.2s; }
+      .back:hover svg { transform: translateX(-3px); }
+
+      /* ── Header ── */
+      .header { margin-bottom: 3rem; }
+
+      .meta-row {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .tag {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--sage-dim);
+        border: 1px solid var(--border);
+        padding: 3px 10px;
+        border-radius: 3px;
+      }
+
+      .year {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.12em;
+        color: rgba(193, 202, 164, 0.3);
+      }
+
+      h1 {
+        font-family: 'DM Sans', sans-serif;
+        font-size: clamp(2rem, 5vw, 3.2rem);
+        font-weight: 600;
+        line-height: 1.1;
+        color: var(--sage);
+        letter-spacing: -0.02em;
+        padding: 0;
+        margin: 0;
+        text-align: left;
+      }
+
+      /* ── Divider ── */
+      .divider {
+        width: 100%;
+        height: 1px;
+        background: var(--border);
+        margin: 2.5rem 0;
+      }
+
+      /* ── Section label ── */
+      .section-label {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--sage-dim);
         margin-bottom: 1rem;
       }
-      h1 {
-        font-size: clamp(1.2rem, 3vw, 2rem);
-        margin: 0 0 0.5rem;
-        text-align: center;
-        padding: 0 1rem;
+
+      /* ── Abstract ── */
+      .abstract p {
+        font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+        line-height: 1.75;
+        color: rgba(193, 202, 164, 0.8);
+        font-weight: 300;
+        text-align: left;
+        margin-bottom: 1em;
+        padding: 0;
       }
-      p {
-        font-size: 0.85rem;
-        color: rgba(193, 202, 164, 0.5);
-        margin: 0 0 2rem;
-        text-align: center;
+      .abstract p:last-child { margin-bottom: 0; }
+
+      /* ── Media grid ── */
+      .media-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 12px;
       }
-      a {
-        font-size: 0.75rem;
+
+      .media-item {
+        aspect-ratio: 16 / 10;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        position: relative;
+        cursor: pointer;
+      }
+
+      .media-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.4s ease, opacity 0.2s;
+      }
+
+      .media-item:hover img { transform: scale(1.04); }
+
+      /* Placeholder for missing images */
+      .media-placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 8px;
+        color: var(--sage-dim);
+        font-family: 'DM Mono', monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.1em;
+      }
+
+      .media-placeholder svg { opacity: 0.2; }
+
+      /* ── Video embed ── */
+      .video-wrapper {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      .video-wrapper iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        display: block;
+      }
+
+      /* Video placeholder (before src is added) */
+      .video-placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 12px;
+        color: var(--sage-dim);
+        font-family: 'DM Mono', monospace;
+        font-size: 0.65rem;
         letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: rgba(193, 202, 164, 0.6);
-        text-decoration: none;
-        border: 1px solid rgba(193, 202, 164, 0.25);
-        padding: 8px 18px;
-        border-radius: 6px;
-        transition: color 0.2s, border-color 0.2s;
       }
-      a:hover { color: #c1caa4; border-color: #c1caa4; }
+
+      .video-placeholder svg { opacity: 0.2; }
+
+      /* ── PDF attachment ── */
+      .pdf-card {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 1.25rem;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: var(--surface);
+        text-decoration: none;
+        color: var(--sage);
+        transition: background 0.2s, border-color 0.2s, transform 0.2s;
+      }
+
+      .pdf-card:hover {
+        background: rgba(193, 202, 164, 0.08);
+        border-color: rgba(193, 202, 164, 0.3);
+        transform: translateY(-1px);
+      }
+
+      .pdf-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 6px;
+        border: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        color: var(--sage-dim);
+      }
+
+      .pdf-info { flex: 1; min-width: 0; }
+
+      .pdf-name {
+        font-size: 0.85rem;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 2px;
+      }
+
+      .pdf-meta {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.1em;
+        color: var(--sage-dim);
+        text-transform: uppercase;
+      }
+
+      .pdf-arrow {
+        color: var(--sage-dim);
+        transition: color 0.2s, transform 0.2s;
+        flex-shrink: 0;
+      }
+
+      .pdf-card:hover .pdf-arrow {
+        color: var(--sage);
+        transform: translate(2px, -2px);
+      }
+
+      /* ── Fade-in animation ── */
+      .fade-up {
+        opacity: 0;
+        transform: translateY(18px);
+        animation: fadeUp 0.55s ease forwards;
+      }
+      .fade-up:nth-child(1) { animation-delay: 0.05s; }
+      .fade-up:nth-child(2) { animation-delay: 0.12s; }
+      .fade-up:nth-child(3) { animation-delay: 0.19s; }
+      .fade-up:nth-child(4) { animation-delay: 0.26s; }
+      .fade-up:nth-child(5) { animation-delay: 0.33s; }
+      .fade-up:nth-child(6) { animation-delay: 0.40s; }
+
+      @keyframes fadeUp {
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      /* ── Mobile ── */
+      @media (max-width: 600px) {
+        .media-grid { grid-template-columns: 1fr 1fr; }
+      }
     </style>
   </head>
   <body>
-    <span class="label">completed</span>
-    <h1>AIR: Modular Drone</h1>
-    <p>This page is currently under construction.</p>
-    <a href="#" onclick="window.close(); return false;">← back</a>
+    <div class="page">
+
+      <button class="back fade-up" onclick="window.close(); return false;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M5 12l7-7M5 12l7 7"/>
+        </svg>
+        back
+      </button>
+
+      <div class="header">
+        <div class="meta-row fade-up">
+          <span class="tag">Engineering</span>
+          <span class="year">2023 – 2024</span>
+        </div>
+        <h1 class="fade-up">AIR: Modular Drone</h1>
+      </div>
+
+      <div class="divider fade-up"></div>
+
+      <!-- Abstract -->
+      <section class="abstract fade-up">
+        <div class="section-label">Abstract</div>
+        <p>
+          AIR, a modular drone platform, is designed to replace weighty multipurpose drones or an array of
+          specialized drones by allowing users to swap modules based on task requirements. The proposed
+          modules, including the ARM Module, Science Payload, and SkyHook Module, offer a range of
+          functionalities from robotic manipulation to environmental data collection. The system's baseline
+          functionality includes object detection/tracking, GPS, SLAM, and takeoff/landing safety,
+          ensuring consistent performance across modules. Key design goals were affordability, weight minimization,
+          and a standardized interface bus that supports sensing, delivery, and survey payloads.
+        </p>
+        <p>
+          The project spanned mechanical design, embedded firmware, and a user dashboard,
+          culminating in a series of outdoor flight tests to validate the modules
+          under varied wind conditions.
+        </p>
+      </section>
+
+      <div class="divider fade-up"></div>
+
+      <!-- Video -->
+      <section class="fade-up">
+        <div class="section-label">Video</div>
+        <div class="video-wrapper">
+          <iframe width="980" height="551" src="https://www.youtube.com/embed/YvFOkeJ__7E" title="AIR Modular Drone Platform | Robotics Senior Capstone" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+      </section>
+
+      <div class="divider fade-up"></div>
+
+      <!-- Deck embed -->
+      <section class="fade-up">
+        <div class="section-label">System Acceptance Review</div>
+        <iframe
+          src="https://drive.google.com/file/d/1aVaS3lNZm1L73ZgoJH3I229zkidClAlH/preview"
+          style="width:100%; aspect-ratio:4/3; border-radius:8px; border:1px solid rgba(193,202,164,0.13); display:block;"
+          allow="autoplay"
+        ></iframe>
+      </section>
+
+      <div class="divider fade-up"></div>
+
+      <!-- Media -->
+      <section class="fade-up">
+        <div class="section-label">Media</div>
+        <div class="media-grid">
+          <div class="media-item">
+            <img src="/static/projects/air-drone.jpg" alt="AIR Modular Drone w/ ARM">
+          </div>
+          <div class="media-item">
+            <img src="/static/projects/air-drone-hook.jpg" alt="AIR Modular Drone w/ Hook">
+          </div>
+          <div class="media-item">
+            <img src="/static/projects/air-drone-sky.jpg" alt="AIR Modular Drone w/ Hook Test">
+          </div>
+        </div>
+      </section>
+
+      <div class="divider fade-up"></div>
+
+      <section class="fade-up">
+        <div class="section-label">Skills Applied</div>
+        <div class="skills-grid">
+          <div class="skills-card">
+            <div class="skills-card-label">Technical</div>
+            <div class="skills-list">
+              <span class="skill-item">PX4 Autopilot</span>
+              <span class="skill-item">ROS2, embedded firmware</span>
+              <span class="skill-item">RViz dashboard (QT)</span>
+              <span class="skill-item">GPS, SLAM</span>
+            </div>
+          </div>
+          <div class="skills-card">
+            <div class="skills-card-label">Analytical</div>
+            <div class="skills-list">
+              <span class="skill-item">Systems Engineering</span>
+              <span class="skill-item">Risk Identification</span>
+              <span class="skill-item">Technical documentation</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="divider fade-up"></div>
+
+      <!-- PDF -->
+      <section class="fade-up">
+        <div class="section-label">Attachment</div>
+        <a class="pdf-card" href="/static/projects/air-drone-report.pdf" target="_blank" rel="noopener noreferrer">
+          <div class="pdf-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+              <polyline points="10 9 9 9 8 9"/>
+            </svg>
+          </div>
+          <div class="pdf-info">
+            <div class="pdf-name">AIR Modular Drone — System Design and Development Document </div>
+            <div class="pdf-meta">PDF · Final Report</div>
+          </div>
+          <div class="pdf-arrow">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M7 17L17 7M17 7H7M17 7v10"/>
+            </svg>
+          </div>
+        </a>
+      </section>
+
+    </div>
   </body>
 </html>

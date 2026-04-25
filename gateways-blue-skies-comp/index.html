@@ -1,57 +1,465 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gateways to Blue Skies — tahaseen shaik</title>
+    <link rel="stylesheet" href="/static/subpage.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
     <style>
+      :root {
+        --sage: #c1caa4;
+        --sage-dim: rgba(193, 202, 164, 0.45);
+        --sage-faint: rgba(193, 202, 164, 0.1);
+        --bg: #1c1c34;
+        --surface: rgba(193, 202, 164, 0.04);
+        --border: rgba(193, 202, 164, 0.13);
+      }
+
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
       body {
-        background-color: #1c1c34;
+        background-color: var(--bg);
+        color: var(--sage);
+        font-family: 'DM Sans', sans-serif;
+        min-height: 100vh;
+        display: block;
+        align-items: unset;
+        justify-content: unset;
+        padding: 0;
+      }
+
+      body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.6;
+      }
+
+      .page {
+        position: relative;
+        z-index: 1;
+        max-width: 860px;
+        margin: 0 auto;
+        padding: clamp(3rem, 8vw, 5rem) clamp(1.25rem, 5vw, 3rem) 5rem;
+      }
+
+      .back {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-family: 'DM Mono', monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--sage-dim);
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        margin-bottom: 3.5rem;
+        transition: color 0.2s;
+      }
+      .back:hover { color: var(--sage); }
+      .back svg { transition: transform 0.2s; }
+      .back:hover svg { transform: translateX(-3px); }
+
+      .header { margin-bottom: 3rem; }
+
+      .meta-row {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .tag {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--sage-dim);
+        border: 1px solid var(--border);
+        padding: 3px 10px;
+        border-radius: 3px;
+      }
+
+      .year {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.12em;
+        color: rgba(193, 202, 164, 0.3);
+      }
+
+      h1 {
+        font-family: 'DM Sans', sans-serif;
+        font-size: clamp(2rem, 5vw, 3.2rem);
+        font-weight: 600;
+        line-height: 1.1;
+        color: var(--sage);
+        letter-spacing: -0.02em;
+        padding: 0;
         margin: 0;
-        height: 100vh;
+        text-align: left;
+      }
+
+      .divider {
+        width: 100%;
+        height: 1px;
+        background: var(--border);
+        margin: 2.5rem 0;
+      }
+
+      .section-label {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--sage-dim);
+        margin-bottom: 1rem;
+      }
+
+      .abstract p {
+        font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+        line-height: 1.75;
+        color: rgba(193, 202, 164, 0.8);
+        font-weight: 300;
+        text-align: left;
+        margin-bottom: 1em;
+        padding: 0;
+      }
+      .abstract p:last-child { margin-bottom: 0; }
+
+      /* ── Media grid ── */
+      .media-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 12px;
+      }
+
+      .media-item {
+        aspect-ratio: 16 / 10;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        position: relative;
+      }
+
+      .media-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.4s ease;
+      }
+
+      .media-item:hover img { transform: scale(1.04); }
+
+      .media-placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 8px;
+        color: var(--sage-dim);
+        font-family: 'DM Mono', monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.1em;
+      }
+      .media-placeholder svg { opacity: 0.2; }
+
+      /* ── Infographic ── */
+      .infographic-wrapper {
+        width: 100%;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        position: relative;
+      }
+
+      /* If using an image as the infographic */
+      .infographic-wrapper img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      /* Placeholder state */
+      .infographic-placeholder {
+        width: 100%;
+        aspect-ratio: 16 / 7;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        font-family: Arial, sans-serif;
-        color: #c1caa4;
-      }
-      .label {
+        gap: 12px;
+        color: var(--sage-dim);
+        font-family: 'DM Mono', monospace;
         font-size: 0.65rem;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        color: rgba(193, 202, 164, 0.45);
-        margin-bottom: 1rem;
-      }
-      h1 {
-        font-size: clamp(1.2rem, 3vw, 2rem);
-        margin: 0 0 0.5rem;
-        text-align: center;
-        padding: 0 1rem;
-      }
-      p {
-        font-size: 0.85rem;
-        color: rgba(193, 202, 164, 0.5);
-        margin: 0 0 2rem;
-        text-align: center;
-      }
-      a {
-        font-size: 0.75rem;
         letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: rgba(193, 202, 164, 0.6);
-        text-decoration: none;
-        border: 1px solid rgba(193, 202, 164, 0.25);
-        padding: 8px 18px;
-        border-radius: 6px;
-        transition: color 0.2s, border-color 0.2s;
       }
-      a:hover { color: #c1caa4; border-color: #c1caa4; }
+      .infographic-placeholder svg { opacity: 0.2; }
+
+      /* Caption below infographic */
+      .infographic-caption {
+        margin-top: 0.6rem;
+        font-family: 'DM Mono', monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.1em;
+        color: var(--sage-dim);
+        text-align: center;
+      }
+
+      /* ── PDF attachment ── */
+      .pdf-card {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 1.25rem;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: var(--surface);
+        text-decoration: none;
+        color: var(--sage);
+        transition: background 0.2s, border-color 0.2s, transform 0.2s;
+      }
+
+      .pdf-card:hover {
+        background: rgba(193, 202, 164, 0.08);
+        border-color: rgba(193, 202, 164, 0.3);
+        transform: translateY(-1px);
+      }
+
+      .pdf-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 6px;
+        border: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        color: var(--sage-dim);
+      }
+
+      .pdf-info { flex: 1; min-width: 0; }
+
+      .pdf-name {
+        font-size: 0.85rem;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 2px;
+      }
+
+      .pdf-meta {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.1em;
+        color: var(--sage-dim);
+        text-transform: uppercase;
+      }
+
+      .pdf-arrow {
+        color: var(--sage-dim);
+        transition: color 0.2s, transform 0.2s;
+        flex-shrink: 0;
+      }
+
+      .pdf-card:hover .pdf-arrow {
+        color: var(--sage);
+        transform: translate(2px, -2px);
+      }
+
+      /* ── Fade-in ── */
+      .fade-up {
+        opacity: 0;
+        transform: translateY(18px);
+        animation: fadeUp 0.55s ease forwards;
+      }
+      .fade-up:nth-child(1) { animation-delay: 0.05s; }
+      .fade-up:nth-child(2) { animation-delay: 0.12s; }
+      .fade-up:nth-child(3) { animation-delay: 0.19s; }
+      .fade-up:nth-child(4) { animation-delay: 0.26s; }
+      .fade-up:nth-child(5) { animation-delay: 0.33s; }
+      .fade-up:nth-child(6) { animation-delay: 0.40s; }
+      .fade-up:nth-child(7) { animation-delay: 0.47s; }
+
+      @keyframes fadeUp {
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      @media (max-width: 600px) {
+        .media-grid { grid-template-columns: 1fr 1fr; }
+      }
     </style>
   </head>
   <body>
-    <span class="label">completed</span>
-    <h1>NASA Gateways to Blue Skies Competition</h1>
-    <p>This page is currently under construction.</p>
-    <a href="#" onclick="window.close(); return false;">← back</a>
+    <div class="page">
+
+      <button class="back fade-up" onclick="window.close(); return false;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M5 12l7-7M5 12l7 7"/>
+        </svg>
+        back
+      </button>
+
+      <div class="header">
+        <div class="meta-row fade-up">
+          <span class="tag">Competition</span>
+          <span class="year">2022</span>
+        </div>
+        <h1 class="fade-up">NASA Gateways to Blue Skies</h1>
+      </div>
+
+      <div class="divider fade-up"></div>
+
+      <!-- Abstract -->
+      <section class="abstract fade-up">
+        <div class="section-label">Abstract</div>
+        <p>
+          The NASA Gateways to Blue Skies competition challenged student teams to envision the future
+          of aviation. In response to the increasing threat of climate change, NASA has declared that it aims to cut carbon
+          emissions by half by 2050 compared to 2005, and achieve net zero emissions in 2060. To meet this goal,
+          airports, airlines, and other organizations in the aviation industry will have to reduce emissions in a major
+          way. Our paper focuses on how airports can be designed to support future changes in the aviation industry
+          with a specific emphasis on two themes: airport sustainability and autonomy. Each theme is tied to our
+          airport innovations and guided our final design of the airport.
+        </p>
+        <p>
+          To start, we modeled our initial concepts on the Denver International Airport. The new technologies
+          we describe center around changes in aircraft formand fuel type, gate design, urban airmobility (UAM),
+          storing multiple fuel types, and autonomous systems. Even though our concepts are applied to the Denver
+          International Airport, we believe the designs can be generalized to other airports as well.
+        </p>
+        <p>
+          In this effort, our team won first place and was invited to present our proposal at the Airports Council International (ACI) - North America
+          conference in Minneapolis in 2022.
+        </p>
+        <a class="btn" href="https://www.nasa.gov/centers-and-facilities/langley/winners-announced-in-inaugural-gateways-to-blue-skies-aeronautics-competition/" target="_blank" rel="noopener noreferrer">
+          NASA Winner Announcement
+        </a>
+      </section>
+
+      <div class="divider fade-up"></div>
+
+      <!-- Infographic -->
+      <section class="fade-up">
+        <div class="section-label">Infographic</div>
+        <div class="infographic-wrapper">
+          <img src="/static/projects/gateways-infographic.png" alt="Gateways to Blue Skies infographic">
+        <p class="infographic-caption">Proposal overview: remote pier layout, urban air mobility, connected autonomy</p>
+      </section>
+
+      <div class="divider fade-up"></div>
+ 
+      <!-- Deck embed -->
+      <section class="fade-up">
+        <div class="section-label">Deck</div>
+        <iframe
+          src="https://drive.google.com/file/d/1kNvCgQsifxGa0_yegbpya49_JomBUfcH/preview"
+          style="width:100%; aspect-ratio:4/3; border-radius:8px; border:1px solid rgba(193,202,164,0.13); display:block;"
+          allow="autoplay"
+        ></iframe>
+      </section>
+
+      <div class="divider fade-up"></div>
+
+      <!-- Media -->
+      <section class="fade-up">
+        <div class="section-label">Media</div>
+        <div class="media-grid">
+          <div class="media-item">
+            <img src="/static/projects/gateways-presenting.jpg" alt="Gateways to Blue Skies presentation">
+          </div>
+          <div class="media-item">
+            <img src="/static/projects/gateways-award.jpg" alt="Gateways to Blue Skies award">
+          </div>
+          <div class="media-item">
+            <img src="/static/projects/gateways-msp.jpg" alt="Gateways to Blue Skies ACI-NA">
+          </div>
+        </div>
+      </section>
+
+      <div class="divider fade-up"></div>
+
+      <section class="fade-up">
+        <div class="section-label">Skills Applied</div>
+        <div class="skills-grid">
+          <div class="skills-card">
+            <div class="skills-card-label">Technical</div>
+            <div class="skills-list">
+              <span class="skill-item"></span>
+              <span class="skill-item">Technical research, writing, presentation</span>
+            </div>
+          </div>
+          <div class="skills-card">
+            <div class="skills-card-label">Non-Technical</div>
+            <div class="skills-list">
+              <span class="skill-item"></span>
+              <span class="skill-item">Leadership</span>
+              <span class="skill-item">Networking</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="divider fade-up"></div>
+
+      <!-- PDF -->
+      <section class="fade-up">
+        <div class="section-label">Attachment</div>
+        <a class="pdf-card" href="/static/projects/gateways-report.pdf" target="_blank" rel="noopener noreferrer">
+          <div class="pdf-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+              <polyline points="10 9 9 9 8 9"/>
+            </svg>
+          </div>
+          <div class="pdf-info">
+            <div class="pdf-name">NASA Gateways to Blue Skies — Proposal</div>
+            <div class="pdf-meta">PDF · Competition Submission</div>
+          </div>
+          <div class="pdf-arrow">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M7 17L17 7M17 7H7M17 7v10"/>
+            </svg>
+          </div>
+        </a>
+        <a class="pdf-card" href="/static/projects/gateways-report.pdf" target="_blank" rel="noopener noreferrer">
+          <div class="pdf-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+              <polyline points="10 9 9 9 8 9"/>
+            </svg>
+          </div>
+          <div class="pdf-info">
+            <div class="pdf-name">NASA Gateways to Blue Skies — Final Presentation</div>
+            <div class="pdf-meta">PPTX · Presentation</div>
+          </div>
+          <div class="pdf-arrow">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M7 17L17 7M17 7H7M17 7v10"/>
+            </svg>
+          </div>
+        </a>
+      </section>
+
+    </div>
   </body>
 </html>

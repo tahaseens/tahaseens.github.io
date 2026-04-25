@@ -1,57 +1,398 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Datacenter Energy Analysis — tahaseen shaik</title>
+    <title>Data Center Dashboard — tahaseen shaik</title>
+    <link rel="stylesheet" href="/static/subpage.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
     <style>
-      body {
-        background-color: #1c1c34;
-        margin: 0;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        font-family: Arial, sans-serif;
-        color: #c1caa4;
+      :root {
+        --sage: #c1caa4;
+        --sage-dim: rgba(193, 202, 164, 0.45);
+        --sage-faint: rgba(193, 202, 164, 0.1);
+        --bg: #1c1c34;
+        --surface: rgba(193, 202, 164, 0.04);
+        --border: rgba(193, 202, 164, 0.13);
       }
-      .label {
+
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+        background-color: var(--bg);
+        color: var(--sage);
+        font-family: 'DM Sans', sans-serif;
+        min-height: 100vh;
+        display: block;
+        align-items: unset;
+        justify-content: unset;
+        padding: 0;
+      }
+
+      body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.6;
+      }
+
+      .page {
+        position: relative;
+        z-index: 1;
+        max-width: 860px;
+        margin: 0 auto;
+        padding: clamp(3rem, 8vw, 5rem) clamp(1.25rem, 5vw, 3rem) 5rem;
+      }
+
+      .back {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-family: 'DM Mono', monospace;
         font-size: 0.65rem;
-        letter-spacing: 0.18em;
+        letter-spacing: 0.16em;
         text-transform: uppercase;
-        color: rgba(193, 202, 164, 0.45);
+        color: var(--sage-dim);
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        margin-bottom: 3.5rem;
+        transition: color 0.2s;
+      }
+      .back:hover { color: var(--sage); }
+      .back svg { transition: transform 0.2s; }
+      .back:hover svg { transform: translateX(-3px); }
+
+      .header { margin-bottom: 3rem; }
+
+      .meta-row {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .tag {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--sage-dim);
+        border: 1px solid var(--border);
+        padding: 3px 10px;
+        border-radius: 3px;
+      }
+
+      .year {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.12em;
+        color: rgba(193, 202, 164, 0.3);
+      }
+
+      h1 {
+        font-family: 'DM Sans', sans-serif;
+        font-size: clamp(2rem, 5vw, 3.2rem);
+        font-weight: 600;
+        line-height: 1.1;
+        color: var(--sage);
+        letter-spacing: -0.02em;
+        padding: 0;
+        margin: 0 0 0.5rem;
+        text-align: left;
+      }
+
+      .subtitle {
+        font-size: 0.9rem;
+        color: var(--sage-dim);
+        font-weight: 300;
+        font-style: italic;
+      }
+
+      .divider {
+        width: 100%;
+        height: 1px;
+        background: var(--border);
+        margin: 2.5rem 0;
+      }
+
+      .section-label {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--sage-dim);
         margin-bottom: 1rem;
       }
-      h1 {
-        font-size: clamp(1.2rem, 3vw, 2rem);
-        margin: 0 0 0.5rem;
-        text-align: center;
-        padding: 0 1rem;
+
+      .abstract p {
+        font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+        line-height: 1.75;
+        color: rgba(193, 202, 164, 0.8);
+        font-weight: 300;
+        text-align: left;
+        margin-bottom: 1em;
+        padding: 0;
       }
-      p {
-        font-size: 0.85rem;
-        color: rgba(193, 202, 164, 0.5);
-        margin: 0 0 2rem;
-        text-align: center;
+      .abstract p:last-child { margin-bottom: 0; }
+
+      /* ── Timeline ── */
+      .timeline {
+        display: flex;
+        flex-direction: column;
+        position: relative;
       }
-      a {
-        font-size: 0.75rem;
-        letter-spacing: 0.12em;
+
+      .timeline::before {
+        content: '';
+        position: absolute;
+        left: 7px;
+        top: 8px;
+        bottom: 8px;
+        width: 1px;
+        background: var(--border);
+      }
+
+      .timeline-item {
+        display: grid;
+        grid-template-columns: 16px 1fr;
+        gap: 1.25rem;
+        padding-bottom: 2rem;
+        position: relative;
+      }
+
+      .timeline-item:last-child { padding-bottom: 0; }
+
+      .timeline-dot {
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        border: 1px solid var(--sage-dim);
+        background: var(--bg);
+        margin-top: 3px;
+        flex-shrink: 0;
+        position: relative;
+        z-index: 1;
+      }
+
+      .timeline-phase {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.58rem;
+        letter-spacing: 0.16em;
         text-transform: uppercase;
-        color: rgba(193, 202, 164, 0.6);
-        text-decoration: none;
-        border: 1px solid rgba(193, 202, 164, 0.25);
-        padding: 8px 18px;
-        border-radius: 6px;
-        transition: color 0.2s, border-color 0.2s;
+        color: var(--sage-dim);
+        margin-bottom: 4px;
       }
-      a:hover { color: #c1caa4; border-color: #c1caa4; }
+
+      .timeline-title {
+        font-size: 0.92rem;
+        font-weight: 600;
+        color: var(--sage);
+        margin-bottom: 4px;
+        line-height: 1.3;
+      }
+
+      .timeline-desc {
+        font-size: 0.82rem;
+        line-height: 1.6;
+        color: rgba(193, 202, 164, 0.6);
+        font-weight: 300;
+      }
+
+      /* ── Skills grid ── */
+      .skills-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .skills-card {
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: var(--surface);
+        padding: 1rem 1.25rem;
+      }
+
+      .skills-card-label {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.58rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--sage-dim);
+        margin-bottom: 0.75rem;
+      }
+
+      .skills-list {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .skill-item {
+        font-size: 0.8rem;
+        color: rgba(193, 202, 164, 0.75);
+        font-weight: 300;
+        line-height: 1.4;
+      }
+
+      /* ── Fade-in ── */
+      .fade-up {
+        opacity: 0;
+        transform: translateY(18px);
+        animation: fadeUp 0.55s ease forwards;
+      }
+      .fade-up:nth-child(1) { animation-delay: 0.05s; }
+      .fade-up:nth-child(2) { animation-delay: 0.12s; }
+      .fade-up:nth-child(3) { animation-delay: 0.19s; }
+      .fade-up:nth-child(4) { animation-delay: 0.26s; }
+      .fade-up:nth-child(5) { animation-delay: 0.33s; }
+      .fade-up:nth-child(6) { animation-delay: 0.40s; }
+      .fade-up:nth-child(7) { animation-delay: 0.47s; }
+      .fade-up:nth-child(8) { animation-delay: 0.54s; }
+
+      @keyframes fadeUp {
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      @media (max-width: 600px) {
+        .skills-grid { grid-template-columns: 1fr; }
+      }
     </style>
   </head>
   <body>
-    <span class="label">in progress</span>
-    <h1>Datacenter Energy Consumption Analysis</h1>
-    <p>This page is currently under construction.</p>
-    <a href="#" onclick="window.close(); return false;">← back</a>
+    <div class="page">
+
+      <button class="back fade-up" onclick="window.close(); return false;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M5 12l7-7M5 12l7 7"/>
+        </svg>
+        back
+      </button>
+
+      <div class="header fade-up">
+        <div class="meta-row">
+          <span class="tag">Engineering</span>
+          <span class="tag">Policy</span>
+          <span class="year">2026–</span>
+        </div>
+        <h1>Data Center Energy Dashboard</h1>
+        <h1 class="subtitle">A data center energy accountability platform for Loudoun County, Virginia</p>
+      </div>
+
+      <div class="divider fade-up"></div>
+
+      <section class="abstract fade-up">
+        <div class="section-label">Overview</div>
+        <p>
+          Loudoun County has one of the largest concentrations of data centers in the world but there is no
+          publically available tool that enables residents to review data center growth, energy demand, and community
+          impact in one place. As AI expands into the daily life of millions around the world, it is only expected that
+          regions like Loudoun County will be the first affected by the massive expansion and absorb the costs (grid strain, water use,
+          noise, land, etc).
+        </p>
+        <p>
+          This independent project is designed to build both a working technical tool and
+          a policy analysis paper to close that gap. The pipeline will pull from public permit records, Dominion Energy
+          IRP filings, EPA eGrid data, and FOIA-obtained water usage figures, etc in order to display relevant data.
+          The dashboard models projected energy demand, carbon intensity, and the downstream effects of new hyperscale facilities through 2030.
+          A physical sensor component may be added to further support the dashboard with real time data.
+        </p>
+        <p>
+          The policy paper will evaluate the externalities given the data outcomes from the information collection and physical
+          sensor output. Furthermore, the paper will outline concrete recommendations on mandatory disclosure, 
+          community benefit agreements, and grid impact fees. Targeting <em>Energy Research & Social Science</em> Journal or
+          the Bipartisan Policy Center for submission.
+        </p>
+      </section>
+
+      <div class="divider fade-up"></div>
+
+      <section class="fade-up">
+        <div class="section-label">Timeline</div>
+        <div class="timeline">
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-phase">Phase 1</div>
+              <div class="timeline-title">Data Pipeline</div>
+              <div class="timeline-desc">
+                Permit records, Dominion Energy IRP filings, EPA eGrid emissions, and water consumption via FOIA
+                aggregated into a reproducible open-source Python pipeline.
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-phase">Phase 2</div>
+              <div class="timeline-title">Public Dashboard</div>
+              <div class="timeline-desc">
+                Interactive scenario modeling for energy demand, carbon intensity, hyperscale growth
+                projections through 2030. Built for county planners, journalists, and advocacy groups.
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-phase">Phase 3</div>
+              <div class="timeline-title">Physical AQI Sensor</div>
+              <div class="timeline-desc">
+                ROS2 + Raspberry Pi deployed near the data center corridor, feeding real-time
+                environmental (likely AQI) data directly into the dashboard.
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-phase">Phase 4</div>
+              <div class="timeline-title">Policy Paper</div>
+              <div class="timeline-desc">
+                Paper output evaluating externalities of the empirical findings.
+                Concrete recommendations on disclosure, community benefit agreements, and grid impact fees.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <div class="divider fade-up"></div>
+
+      <section class="fade-up">
+        <div class="section-label">Skills Applied</div>
+        <div class="skills-grid">
+          <div class="skills-card">
+            <div class="skills-card-label">Technical</div>
+            <div class="skills-list">
+              <span class="skill-item">Python, GeoPandas, PostGIS</span>
+              <span class="skill-item">ROS2, IoT sensor integration</span>
+              <span class="skill-item">React dashboard</span>
+              <span class="skill-item">FOIA research & data analysis</span>
+            </div>
+          </div>
+          <div class="skills-card">
+            <div class="skills-card-label">Policy & Analytical</div>
+            <div class="skills-list">
+              <span class="skill-item">Externalities & public economics</span>
+              <span class="skill-item">Energy regulation (Virginia SCC)</span>
+              <span class="skill-item">AI infrastructure policy</span>
+              <span class="skill-item">Policy memo & research writing</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
   </body>
 </html>
