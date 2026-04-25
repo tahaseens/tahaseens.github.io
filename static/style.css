@@ -378,6 +378,12 @@ body {
   color: #c1caa4;
 }
 
+.menu-open .disclaimer {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
 /* ── Mobile ── */
 @media (max-width: 768px) {
   .tile {

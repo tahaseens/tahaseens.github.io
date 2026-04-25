@@ -160,11 +160,13 @@
         menu.classList.add('open');
         overlay.classList.add('open');
         hamburger.classList.add('hidden');
+        document.body.classList.add('menu-open');
       }
       function closeMenu() {
         menu.classList.remove('open');
         overlay.classList.remove('open');
         hamburger.classList.remove('hidden');
+        document.body.classList.remove('menu-open');
       }
 
       hamburger.addEventListener('click', openMenu);
