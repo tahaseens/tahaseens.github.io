@@ -17,7 +17,7 @@ body {
 }
 
 .tile {
-  width: 45vw;
+  width: 33vw;
   height: 100vh;
   flex-shrink: 0;
   background: url('/static/tile-big.png') no-repeat;
@@ -69,12 +69,10 @@ body {
   color: #c1caa4 !important;
 }
 
-/* LinkedIn — sage outline */
 .linkedin-link {
   border-color: #c1caa4;
 }
 
-/* Substack — same palette */
 .substack-link {
   border-color: #c1caa4;
 }
@@ -143,9 +141,8 @@ body {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  gap: 0.5rem;
   transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1600;
   font-family: Arial, sans-serif;
@@ -153,33 +150,184 @@ body {
 }
 
 .menu.open {
-  width: calc(55vw + 80px);
+  width: 66vw;
 }
 
-.menu a {
-  color: #c1caa4;
-  text-decoration: none;
-  font-size: 1.4rem;
-  margin: 0.75rem 1.5rem;
-  letter-spacing: 0.02em;
+/* ── Menu inner scroll container ── */
+.menu-inner {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(1.5rem, 4vh, 3.5rem);
+  padding: clamp(3.5rem, 7vh, 6rem) clamp(1.5rem, 3vw, 3rem) clamp(2rem, 4vh, 3.5rem);
+  box-sizing: border-box;
   opacity: 0;
-  transform: translateX(20px);
-  transition: opacity 0.25s ease, transform 0.25s ease, color 0.2s ease;
-  white-space: nowrap;
+  transform: translateX(16px);
+  transition: opacity 0.28s ease 0.1s, transform 0.28s ease 0.1s;
 }
 
-.menu.open a {
+.menu.open .menu-inner {
   opacity: 1;
   transform: translateX(0);
-  transition-delay: 0.15s;
 }
 
-.menu.open a:nth-child(3) {
-  transition-delay: 0.22s;
+/* ── Section label ── */
+.menu-section {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.5rem, 1vh, 0.9rem);
 }
 
-.menu a:hover {
-  color: #ffffff;
+.section-label {
+  font-family: Arial, sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(193, 202, 164, 0.45);
+  padding-left: 2px;
+}
+
+/* ── Divider between sections ── */
+.menu-divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(193, 202, 164, 0.1);
+  margin: 0;
+}
+
+/* ── Project grid ── */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: clamp(8px, 1.2vw, 16px);
+}
+
+/* ── Individual project tile ── */
+.project-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  border: 1px solid rgba(193, 202, 164, 0.18);
+  background: rgba(193, 202, 164, 0.04);
+  color: #c1caa4;
+  text-decoration: none !important;
+  box-sizing: border-box;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  overflow: hidden;
+}
+
+.project-tile::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  background: radial-gradient(ellipse at top left, rgba(193, 202, 164, 0.07) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  z-index: 0;
+}
+
+.project-tile:hover {
+  background: rgba(193, 202, 164, 0.09);
+  border-color: rgba(193, 202, 164, 0.38);
+  transform: translateY(-2px);
+}
+
+.project-tile:hover::before {
+  opacity: 1;
+}
+
+/* ── Tile image area ── */
+.tile-image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: rgba(193, 202, 164, 0.06);
+  border-bottom: 1px solid rgba(193, 202, 164, 0.1);
+  overflow: hidden;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.tile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease, opacity 0.2s ease;
+}
+
+.project-tile:hover .tile-image img {
+  transform: scale(1.04);
+}
+
+/* Placeholder when no image */
+.tile-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tile-image-placeholder svg {
+  opacity: 0.15;
+}
+
+/* ── Tile text body ── */
+.tile-body {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  padding: clamp(10px, 1.2vw, 16px) clamp(12px, 1.4vw, 18px);
+}
+
+.tile-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.tile-tag {
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(193, 202, 164, 0.45);
+}
+
+.tile-year {
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  color: rgba(193, 202, 164, 0.35);
+  font-variant-numeric: tabular-nums;
+}
+
+.tile-title {
+  font-size: clamp(0.78rem, 1vw, 0.95rem);
+  line-height: 1.35;
+  color: #c1caa4;
+  font-weight: 600;
+  flex: 1;
+}
+
+.tile-arrow {
+  align-self: flex-end;
+  font-size: 1rem;
+  color: rgba(193, 202, 164, 0.3);
+  transition: color 0.2s ease, transform 0.2s ease;
+  margin-top: 10px;
+}
+
+.project-tile:hover .tile-arrow {
+  color: #c1caa4;
+  transform: translate(2px, -2px);
 }
 
 /* Close button inside nav */
@@ -195,6 +343,7 @@ body {
   padding: 4px 8px;
   line-height: 1;
   transition: color 0.2s ease, transform 0.2s ease;
+  z-index: 10;
 }
 
 .menu-close:hover {
@@ -202,7 +351,7 @@ body {
   transform: scale(1.15);
 }
 
-/* ── Footer disclaimer — bottom-left, away from hamburger ── */
+/* ── Footer disclaimer ── */
 .disclaimer {
   position: fixed;
   bottom: 14px;
@@ -250,6 +399,17 @@ body {
   .menu.open {
     width: 100vw;
     border-left: none;
+  }
+  .menu-inner {
+    padding: 4rem 1rem 2rem;
+    gap: clamp(1.2rem, 3vh, 2rem);
+  }
+  .project-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .tile-title {
+    font-size: 0.78rem;
   }
   .disclaimer {
     left: 10px;
