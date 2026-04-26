@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="./static/tab-icon.png">
-    <title>AIR: Modular Drone — tahaseen shaik</title>
+    <title>TableCast — tahaseen shaik</title>
     <link rel="stylesheet" href="/static/subpage.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
@@ -319,6 +319,49 @@
         line-height: 1.4;
       }
 
+      /* ── Poster ── */
+      .poster-wrapper {
+        width: 100%;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        position: relative;
+      }
+
+      /* If using an image as the poster */
+      .poster-wrapper img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      /* Placeholder state */
+      .poster-placeholder {
+        width: 100%;
+        aspect-ratio: 16 / 7;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        color: var(--sage-dim);
+        font-family: 'DM Mono', monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.12em;
+      }
+      .poster-placeholder svg { opacity: 0.2; }
+
+      /* Caption below poster */
+      .poster-caption {
+        margin-top: 0.6rem;
+        font-family: 'DM Mono', monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.1em;
+        color: var(--sage-dim);
+        text-align: center;
+      }
+
       /* ── Fade-in animation ── */
       .fade-up {
         opacity: 0;
@@ -355,9 +398,9 @@
       <div class="header">
         <div class="meta-row fade-up">
           <span class="tag">Engineering</span>
-          <span class="year">2023 – 2024</span>
+          <span class="year">2024</span>
         </div>
-        <h1 class="fade-up">AIR: Modular Drone</h1>
+        <h1 class="fade-up">TableCast</h1>
       </div>
 
       <div class="divider fade-up"></div>
@@ -366,38 +409,34 @@
       <section class="abstract fade-up">
         <div class="section-label">Abstract</div>
         <p>
-          AIR, a modular drone platform, is designed to replace weighty multipurpose drones or an array of
-          specialized drones by allowing users to swap modules based on task requirements. The proposed
-          modules, including the ARM Module, Science Payload, and SkyHook Module, offer a range of
-          functionalities from robotic manipulation to environmental data collection. The system's baseline
-          functionality includes object detection/tracking, GPS, SLAM, and takeoff/landing safety,
-          ensuring consistent performance across modules. Key design goals were affordability, weight minimization,
-          and a standardized interface bus that supports sensing, delivery, and survey payloads.
+          TableCast is designed to improve the experience of people learning new recipes in the
+          kitchen by creating a projector that displays interactive steps onto a kitchen countertop.
+          A user will be able to select a recipe on their laptop. Then, each step of the recipe will be
+          demonstrated on the counter top so that the user can follow along using their ingredients.
         </p>
         <p>
-          The project spanned mechanical design, embedded firmware, and a user dashboard,
-          culminating in a series of outdoor flight tests to validate the modules
-          under varied wind conditions.
+          The project required implementation of gesture recognition, reactive software, and warp correction (computer vision)
+          in order to put together the final working demo.
         </p>
       </section>
 
       <div class="divider fade-up"></div>
 
-      <!-- Video -->
+      <!-- Poster -->
       <section class="fade-up">
-        <div class="section-label">Video</div>
-        <div class="video-wrapper">
-          <iframe width="980" height="551" src="https://www.youtube.com/embed/YvFOkeJ__7E" title="AIR Modular Drone Platform | Robotics Senior Capstone" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </div>
+        <div class="section-label">Poster</div>
+        <div class="poster-wrapper">
+          <img src="/static/projects/tablecast-poster.jpg" alt="TableCast Poster">
+        <p class="poster-caption">Capstone Presentation Poster</p>
       </section>
 
       <div class="divider fade-up"></div>
 
       <!-- Deck embed -->
       <section class="fade-up">
-        <div class="section-label">System Acceptance Review</div>
+        <div class="section-label">Final Presentation</div>
         <iframe
-          src="https://drive.google.com/file/d/1aVaS3lNZm1L73ZgoJH3I229zkidClAlH/preview"
+          src="https://drive.google.com/file/d/1KSiDXQnpce1AO0AhE3tqeKiApqnmwzCr/preview"
           style="width:100%; aspect-ratio:4/3; border-radius:8px; border:1px solid rgba(193,202,164,0.13); display:block;"
           allow="autoplay"
         ></iframe>
@@ -410,13 +449,10 @@
         <div class="section-label">Media</div>
         <div class="media-grid">
           <div class="media-item">
-            <img src="/static/projects/air-drone.jpg" alt="AIR Modular Drone w/ ARM">
+            <img src="/static/projects/tablecast-demo.jpg" alt="TableCast Demo">
           </div>
           <div class="media-item">
-            <img src="/static/projects/air-drone-hook.jpg" alt="AIR Modular Drone w/ Hook">
-          </div>
-          <div class="media-item">
-            <img src="/static/projects/air-drone-sky.jpg" alt="AIR Modular Drone w/ Hook Test">
+            <img src="/static/projects/tablecast-vision.jpg" alt="TableCast Vision">
           </div>
         </div>
       </section>
@@ -429,18 +465,16 @@
           <div class="skills-card">
             <div class="skills-card-label">Technical</div>
             <div class="skills-list">
-              <span class="skill-item">PX4 Autopilot</span>
-              <span class="skill-item">ROS2, embedded firmware</span>
-              <span class="skill-item">RViz dashboard (QT)</span>
-              <span class="skill-item">GPS, SLAM</span>
+              <span class="skill-item">Computer Vision, warping</span>
+              <span class="skill-item">Calibration</span>
             </div>
           </div>
           <div class="skills-card">
             <div class="skills-card-label">Analytical</div>
             <div class="skills-list">
-              <span class="skill-item">Systems Engineering</span>
-              <span class="skill-item">Risk Identification</span>
               <span class="skill-item">Technical documentation</span>
+              <span class="skill-item">Systems Engineering/Design</span>
+              <span class="skill-item">Risk Identification</span>
             </div>
           </div>
         </div>
@@ -451,7 +485,7 @@
       <!-- PDF -->
       <section class="fade-up">
         <div class="section-label">Attachment</div>
-        <a class="pdf-card" href="/static/projects/air-drone-report.pdf" target="_blank" rel="noopener noreferrer">
+        <a class="pdf-card" href="/static/projects/TableCast_Abstract.pdf" target="_blank" rel="noopener noreferrer">
           <div class="pdf-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
@@ -462,8 +496,8 @@
             </svg>
           </div>
           <div class="pdf-info">
-            <div class="pdf-name">AIR Modular Drone — System Design and Development Document</div>
-            <div class="pdf-meta">PDF · Final Report</div>
+            <div class="pdf-name">TableCast Abstract</div>
+            <div class="pdf-meta">PDF · Abstract</div>
           </div>
           <div class="pdf-arrow">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
