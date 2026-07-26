@@ -161,6 +161,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  justify-content: safe center;
   gap: clamp(1.5rem, 4vh, 3.5rem);
   padding: clamp(3.5rem, 7vh, 6rem) clamp(1.5rem, 3vw, 3rem) clamp(2rem, 4vh, 3.5rem);
   box-sizing: border-box;
@@ -258,6 +259,30 @@ body {
   object-fit: cover;
   display: block;
   transition: transform 0.35s ease, opacity 0.2s ease;
+}
+
+.publicbrief-tile-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(18px, 2.6vw, 34px);
+  box-sizing: border-box;
+  background:
+    linear-gradient(rgba(250, 246, 235, 0.88), rgba(250, 246, 235, 0.88)),
+    radial-gradient(circle at 20% 20%, rgba(23, 35, 29, 0.1), transparent 55%);
+}
+
+.publicbrief-wordmark {
+  color: #0c2d55;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  font-weight: 700;
+  line-height: 1;
+  transition: transform 0.35s ease;
+}
+
+.project-tile:hover .publicbrief-wordmark {
+  transform: scale(1.04);
 }
 
 .project-tile:hover .tile-image img {

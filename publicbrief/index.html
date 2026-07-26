@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PublicBrief DMV — tahaseen shaik</title>
+    <meta name="description" content="PublicBrief DMV makes consequential local-government decisions easier to understand before a final vote.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --sage: #c1caa4;
+        --sage-dim: rgba(193, 202, 164, 0.58);
+        --bg: #1c1c34;
+        --surface: rgba(193, 202, 164, 0.04);
+        --border: rgba(193, 202, 164, 0.15);
+      }
+
+      *, *::before, *::after { box-sizing: border-box; }
+
+      html { scroll-behavior: smooth; }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: var(--bg);
+        color: var(--sage);
+        font-family: 'DM Sans', sans-serif;
+      }
+
+      body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+        pointer-events: none;
+        opacity: 0.6;
+      }
+
+      .page {
+        position: relative;
+        z-index: 1;
+        width: min(100%, 860px);
+        margin: 0 auto;
+        padding: clamp(3rem, 8vw, 5rem) clamp(1.25rem, 5vw, 3rem) 5rem;
+      }
+
+      .back {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 3.5rem;
+        color: var(--sage-dim);
+        font-family: 'DM Mono', monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.16em;
+        text-decoration: none;
+        text-transform: uppercase;
+        transition: color 0.2s;
+      }
+
+      .back:hover { color: var(--sage); }
+      .back svg { transition: transform 0.2s; }
+      .back:hover svg { transform: translateX(-3px); }
+
+      .header { margin-bottom: 3rem; }
+
+      .meta-row {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .tag {
+        padding: 3px 10px;
+        border: 1px solid var(--border);
+        border-radius: 3px;
+        color: var(--sage-dim);
+        font-family: 'DM Mono', monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+
+      .year {
+        color: rgba(193, 202, 164, 0.34);
+        font-family: 'DM Mono', monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.12em;
+      }
+
+      h1 {
+        margin: 0 0 0.55rem;
+        color: var(--sage);
+        font-size: clamp(2.35rem, 7vw, 4.35rem);
+        font-weight: 600;
+        letter-spacing: -0.04em;
+        line-height: 1;
+      }
+
+      .subtitle {
+        margin: 0;
+        color: var(--sage-dim);
+        font-size: clamp(0.9rem, 2vw, 1.05rem);
+        font-style: italic;
+        font-weight: 300;
+        line-height: 1.5;
+      }
+
+      .divider {
+        width: 100%;
+        height: 1px;
+        margin: 2.5rem 0;
+        background: var(--border);
+      }
+
+      .section-label {
+        margin-bottom: 1rem;
+        color: var(--sage-dim);
+        font-family: 'DM Mono', monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+
+      .abstract p {
+        margin: 0 0 1em;
+        color: rgba(193, 202, 164, 0.82);
+        font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+        font-weight: 300;
+        line-height: 1.75;
+      }
+
+      .abstract p:last-child { margin-bottom: 0; }
+
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+
+      .feature-card, .skills-card {
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: var(--surface);
+      }
+
+      .feature-card { padding: 1.25rem; }
+
+      .feature-number {
+        display: block;
+        margin-bottom: 1.25rem;
+        color: rgba(193, 202, 164, 0.34);
+        font-family: 'DM Mono', monospace;
+        font-size: 0.58rem;
+        letter-spacing: 0.14em;
+      }
+
+      .feature-title {
+        margin: 0 0 0.45rem;
+        color: var(--sage);
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+
+      .feature-desc {
+        margin: 0;
+        color: rgba(193, 202, 164, 0.62);
+        font-size: 0.79rem;
+        font-weight: 300;
+        line-height: 1.55;
+      }
+
+      .skills-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .skills-card { padding: 1rem 1.25rem; }
+
+      .skills-card-label {
+        margin-bottom: 0.75rem;
+        color: var(--sage-dim);
+        font-family: 'DM Mono', monospace;
+        font-size: 0.58rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .skills-list {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .skill-item {
+        color: rgba(193, 202, 164, 0.75);
+        font-size: 0.8rem;
+        font-weight: 300;
+        line-height: 1.4;
+      }
+
+      .actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
+      .header-actions { margin-top: 1.25rem; }
+
+      .pdf-frame {
+        display: block;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: var(--surface);
+      }
+
+      .action-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 9px 15px;
+        border: 1px solid rgba(193, 202, 164, 0.26);
+        border-radius: 6px;
+        color: rgba(193, 202, 164, 0.74);
+        font-family: 'DM Mono', monospace;
+        font-size: 0.63rem;
+        letter-spacing: 0.12em;
+        text-decoration: none;
+        text-transform: uppercase;
+        transition: border-color 0.2s, color 0.2s, transform 0.2s;
+      }
+
+      .action-link:hover {
+        border-color: var(--sage);
+        color: var(--sage);
+        transform: translateY(-1px);
+      }
+
+      .fade-up {
+        opacity: 0;
+        transform: translateY(18px);
+        animation: fadeUp 0.55s ease forwards;
+      }
+
+      .fade-up:nth-child(1) { animation-delay: 0.05s; }
+      .fade-up:nth-child(2) { animation-delay: 0.12s; }
+      .fade-up:nth-child(3) { animation-delay: 0.19s; }
+      .fade-up:nth-child(4) { animation-delay: 0.26s; }
+      .fade-up:nth-child(5) { animation-delay: 0.33s; }
+      .fade-up:nth-child(6) { animation-delay: 0.4s; }
+      .fade-up:nth-child(7) { animation-delay: 0.47s; }
+      .fade-up:nth-child(8) { animation-delay: 0.54s; }
+
+      @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        .fade-up { opacity: 1; transform: none; animation: none; }
+        .back svg, .action-link { transition: none; }
+      }
+
+      @media (max-width: 680px) {
+        .feature-grid, .skills-grid { grid-template-columns: 1fr; }
+        .feature-number { margin-bottom: 0.75rem; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <a class="back fade-up" href="/" aria-label="Back to portfolio">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M19 12H5M5 12l7-7M5 12l7 7"/>
+        </svg>
+        back
+      </a>
+
+      <header class="header fade-up">
+        <div class="meta-row">
+          <span class="tag">Civic Tech</span>
+          <span class="tag">Public Policy</span>
+          <span class="year">2026</span>
+        </div>
+        <h1>PublicBrief DMV</h1>
+        <p class="subtitle">Local government decisions, explained before they are final.</p>
+        <div class="actions header-actions">
+          <a class="action-link" href="https://public-brief.vercel.app/" target="_blank" rel="noopener noreferrer">
+            Visit website <span aria-hidden="true">↗</span>
+          </a>
+          <a class="action-link" href="https://github.com/tahaseens/public-brief" target="_blank" rel="noopener noreferrer">
+            View source <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </header>
+
+      <div class="divider fade-up"></div>
+
+      <section class="abstract fade-up">
+        <div class="section-label">Overview</div>
+        <p>
+          PublicBrief helps residents understand upcoming local-government decisions involving public money,
+          surveillance, land use, infrastructure, and community services. It turns dense agendas, staff reports,
+          and public notices into clear, source-grounded briefs before a hearing, contract award, or final vote.
+        </p>
+        <p>
+          The politically neutral prototype focuses on Loudoun County, Virginia. It identifies what is being
+          proposed, who holds each decision-making role, what information may be missing, and how residents can
+          participate—without recommending a political position.
+        </p>
+      </section>
+
+      <div class="divider fade-up"></div>
+
+      <section class="fade-up">
+        <div class="section-label">Project Brief</div>
+        <iframe
+          src="https://drive.google.com/file/d/1cT2CvaSwBVGwYSO5EZF885VLsz7UKXc8/view"
+          style="width:100%; aspect-ratio:4/3; border-radius:8px; border:1px solid rgba(193,202,164,0.13); display:block;"
+          allow="autoplay"
+        ></iframe>
+      </section>
+
+      <div class="divider fade-up"></div>
+
+      <section class="fade-up">
+        <div class="section-label">Core Experience</div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <span class="feature-number">01 / DISCOVER</span>
+            <h2 class="feature-title">Scan My Locality</h2>
+            <p class="feature-desc">Browse source-linked demonstration briefs across public money, privacy, surveillance, and community infrastructure.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-number">02 / ANALYZE</span>
+            <h2 class="feature-title">Analyze a Document</h2>
+            <p class="feature-desc">Turn pasted government text into a structured brief with documented facts, implications, missing information, and evidence.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-number">03 / PARTICIPATE</span>
+            <h2 class="feature-title">Act Before the Vote</h2>
+            <p class="feature-desc">Surface decision roles, questions to ask, official participation routes, and a ready-to-edit public-comment draft.</p>
+          </article>
+        </div>
+      </section>
+
+      <div class="divider fade-up"></div>
+
+      <section class="fade-up">
+        <div class="section-label">Skills Applied</div>
+        <div class="skills-grid">
+          <div class="skills-card">
+            <div class="skills-card-label">Technical</div>
+            <div class="skills-list">
+              <span class="skill-item">Next.js, React, TypeScript</span>
+              <span class="skill-item">OpenAI Responses API & structured outputs</span>
+              <span class="skill-item">Zod validation & security controls</span>
+              <span class="skill-item">Responsive, accessible interface design</span>
+            </div>
+          </div>
+          <div class="skills-card">
+            <div class="skills-card-label">Policy & Product</div>
+            <div class="skills-list">
+              <span class="skill-item">Civic-document comprehension</span>
+              <span class="skill-item">Decision accountability mapping</span>
+              <span class="skill-item">Source-grounded evidence design</span>
+              <span class="skill-item">Public-participation workflows</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
