@@ -19,10 +19,14 @@
 
       *, *::before, *::after { box-sizing: border-box; }
 
-      html { scroll-behavior: smooth; }
+      html {
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+      }
 
       body {
         margin: 0;
+        overflow-x: hidden;
         background: var(--ink);
         color: var(--sage);
         font-family: Arial, Helvetica, sans-serif;
@@ -59,8 +63,28 @@
       .back:hover { color: var(--sage); }
 
       .hero {
+        position: relative;
+        isolation: isolate;
         padding: clamp(64px, 10vw, 112px) 0 clamp(64px, 8vw, 96px);
         text-align: center;
+      }
+
+      .hero::before {
+        position: absolute;
+        z-index: -1;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        width: 100vw;
+        background-image:
+          repeating-linear-gradient(rgba(255, 255, 255, 0.24) 0, rgba(255, 255, 255, 0.24) 1px, transparent 1px, transparent 48px),
+          repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.24) 0, rgba(255, 255, 255, 0.24) 1px, transparent 1px, transparent 48px),
+          repeating-linear-gradient(var(--card-grid) 0, var(--card-grid) 1px, transparent 1px, transparent 48px),
+          repeating-linear-gradient(90deg, var(--card-grid) 0, var(--card-grid) 1px, transparent 1px, transparent 48px);
+        background-position: 0 0, 0 0, 5px 5px, 5px 5px;
+        background-size: 48px 48px;
+        content: "";
+        transform: translateX(-50%);
       }
 
       .meta {
@@ -87,6 +111,10 @@
         font-weight: 700;
         letter-spacing: -0.075em;
         line-height: 0.86;
+        text-shadow:
+          0 0 20px var(--ink),
+          0 0 34px var(--ink),
+          0 0 46px var(--ink);
       }
 
       h1::after {
@@ -291,7 +319,6 @@
           <a class="back" href="/">
             Back to portfolio
           </a>
-          <span>Tahaseen Shaik / Project 2026</span>
         </nav>
 
         <header class="hero">

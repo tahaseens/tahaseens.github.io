@@ -135,7 +135,14 @@ body {
   right: 0;
   height: 100%;
   width: 0;
-  background: rgba(20, 20, 40, 0.92);
+  background-color: rgba(20, 20, 40, 0.96);
+  background-image:
+    repeating-linear-gradient(rgba(255, 255, 255, 0.08) 0, rgba(255, 255, 255, 0.08) 1px, transparent 1px, transparent 48px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.08) 0, rgba(255, 255, 255, 0.08) 1px, transparent 1px, transparent 48px),
+    repeating-linear-gradient(rgba(122, 140, 94, 0.16) 0, rgba(122, 140, 94, 0.16) 1px, transparent 1px, transparent 48px),
+    repeating-linear-gradient(90deg, rgba(122, 140, 94, 0.16) 0, rgba(122, 140, 94, 0.16) 1px, transparent 1px, transparent 48px);
+  background-position: 0 0, 0 0, 5px 5px, 5px 5px;
+  background-size: 48px 48px;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   overflow: hidden;
@@ -184,11 +191,15 @@ body {
 
 .section-label {
   font-family: Arial, sans-serif;
-  font-size: 0.65rem;
-  letter-spacing: 0.18em;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(193, 202, 164, 0.45);
+  color: rgba(193, 202, 164, 0.88);
   padding-left: 2px;
+  text-shadow:
+    0 0 10px #1c1c34,
+    0 0 18px #1c1c34;
 }
 
 /* ── Divider between sections ── */
@@ -213,7 +224,7 @@ body {
   flex-direction: column;
   border-radius: 10px;
   border: 1px solid rgba(193, 202, 164, 0.18);
-  background: rgba(193, 202, 164, 0.04);
+  background: rgba(28, 28, 52, 0.86);
   color: #c1caa4;
   text-decoration: none !important;
   box-sizing: border-box;
@@ -233,7 +244,7 @@ body {
 }
 
 .project-tile:hover {
-  background: rgba(193, 202, 164, 0.09);
+  background: rgba(38, 38, 61, 0.96);
   border-color: rgba(193, 202, 164, 0.38);
   transform: translateY(-2px);
 }
@@ -340,19 +351,6 @@ body {
   color: #c1caa4;
   font-weight: 600;
   flex: 1;
-}
-
-.tile-arrow {
-  align-self: flex-end;
-  font-size: 1rem;
-  color: rgba(193, 202, 164, 0.3);
-  transition: color 0.2s ease, transform 0.2s ease;
-  margin-top: 10px;
-}
-
-.project-tile:hover .tile-arrow {
-  color: #c1caa4;
-  transform: translate(2px, -2px);
 }
 
 /* Close button inside nav */

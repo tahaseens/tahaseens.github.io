@@ -8,6 +8,11 @@
   --brief-line: rgba(193, 202, 164, 0.23);
 }
 
+.project-brief,
+.project-brief *,
+.project-brief *::before,
+.project-brief *::after { box-sizing: border-box; }
+
 .project-brief {
   display: block;
   min-height: 100vh;
@@ -55,12 +60,35 @@
 .project-brief .back svg { display: none; }
 
 .project-brief .header {
+  position: relative;
+  isolation: isolate;
   margin: 0;
   padding: clamp(64px, 10vw, 112px) 0 clamp(64px, 8vw, 96px);
   text-align: center;
 }
 
+.project-brief .header::before {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  background-image:
+    repeating-linear-gradient(rgba(255, 255, 255, 0.24) 0, rgba(255, 255, 255, 0.24) 1px, transparent 1px, transparent 48px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.24) 0, rgba(255, 255, 255, 0.24) 1px, transparent 1px, transparent 48px),
+    repeating-linear-gradient(var(--brief-card-grid) 0, var(--brief-card-grid) 1px, transparent 1px, transparent 48px),
+    repeating-linear-gradient(90deg, var(--brief-card-grid) 0, var(--brief-card-grid) 1px, transparent 1px, transparent 48px);
+  background-position: 0 0, 0 0, 5px 5px, 5px 5px;
+  background-size: 48px 48px;
+  content: "";
+  transform: translateX(-50%);
+}
+
 .project-brief .meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
   gap: 9px 22px;
   margin-bottom: 24px;
@@ -89,6 +117,20 @@
   letter-spacing: -0.065em;
   line-height: 0.92;
   text-align: center;
+  text-shadow:
+    0 0 20px var(--brief-ink),
+    0 0 34px var(--brief-ink),
+    0 0 46px var(--brief-ink);
+}
+
+.project-brief h1 small {
+  display: inline-block;
+  margin-left: 20px;
+  padding-top: 0.15em;
+  font-size: 0.16em;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  vertical-align: top;
 }
 
 .project-brief h1::after {
@@ -118,6 +160,46 @@
   letter-spacing: 0;
   line-height: 1.5;
   text-align: center;
+}
+
+.project-brief .actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.project-brief .action-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 165px;
+  padding: 12px 14px;
+  border: 1px solid var(--brief-sage);
+  background: var(--brief-sage);
+  box-shadow: 5px 5px 0 var(--brief-card-grid);
+  color: var(--brief-ink);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+}
+
+.project-brief .action-link + .action-link {
+  border-color: var(--brief-accent);
+  background: var(--brief-accent);
+}
+
+.project-brief .action-link:hover {
+  border-color: var(--brief-cream);
+  background: var(--brief-cream);
+  box-shadow: 2px 2px 0 var(--brief-card-grid);
+  color: var(--brief-ink);
+  transform: translateY(-2px);
 }
 
 .project-brief .divider {
@@ -281,7 +363,10 @@
   .project-brief .page { padding: 28px 20px 48px; }
   .project-brief .header { padding: 58px 0 64px; }
   .project-brief h1 { font-size: clamp(2.8rem, 13vw, 4rem); line-height: 0.96; }
+  .project-brief h1 small { display: block; margin: 14px 0 0 3px; padding: 0; font-size: 0.24em; }
   .project-brief .meta-row { gap: 8px 16px; }
+  .project-brief .actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .project-brief .action-link { min-width: 0; padding: 12px 10px; font-size: 0.66rem; }
   .project-brief .skills-grid { grid-template-columns: 1fr; gap: 28px; }
 }
 
