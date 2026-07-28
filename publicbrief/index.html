@@ -10,6 +10,7 @@
         --ink: #1c1c34;
         --sage: #c1caa4;
         --accent: #78a198;
+        --card-grid: rgba(122, 140, 94, 0.66);
         --cream: #eee8d9;
         --sage-muted: rgba(193, 202, 164, 0.84);
         --sage-faint: rgba(193, 202, 164, 0.12);
@@ -77,13 +78,29 @@
 
       h1 {
         display: flex;
+        position: relative;
         align-items: flex-start;
         justify-content: center;
         margin: 0;
+        padding-bottom: 30px;
         font-size: clamp(3.65rem, 9.5vw, 7.6rem);
         font-weight: 700;
         letter-spacing: -0.075em;
         line-height: 0.86;
+      }
+
+      h1::after {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 174px;
+        height: 5px;
+        background:
+          linear-gradient(rgba(238, 232, 217, 0.46), rgba(238, 232, 217, 0.46)) left center / 72px 1px no-repeat,
+          radial-gradient(circle, var(--card-grid) 0 2.5px, transparent 3px) center / 5px 5px no-repeat,
+          linear-gradient(var(--card-grid), var(--card-grid)) right center / 72px 1px no-repeat;
+        content: "";
+        transform: translateX(-50%);
       }
 
       h1 small {
@@ -121,6 +138,7 @@
         padding: 12px 14px;
         border: 1px solid var(--sage);
         background: var(--sage);
+        box-shadow: 5px 5px 0 var(--card-grid);
         color: var(--ink);
         font-size: 0.72rem;
         font-weight: 700;
@@ -139,6 +157,7 @@
         border-color: var(--cream);
         background: var(--cream);
         color: var(--ink);
+        box-shadow: 2px 2px 0 var(--card-grid);
         transform: translateY(-2px);
       }
 
