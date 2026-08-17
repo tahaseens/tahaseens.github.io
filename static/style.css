@@ -272,6 +272,43 @@ body {
   transition: transform 0.35s ease, opacity 0.2s ease;
 }
 
+.autonomy-tile-image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(10px, 1.3vw, 16px);
+  padding: clamp(16px, 2vw, 26px);
+  box-sizing: border-box;
+  background:
+    repeating-linear-gradient(rgba(193, 202, 164, 0.055) 0, rgba(193, 202, 164, 0.055) 1px, transparent 1px, transparent 24px),
+    repeating-linear-gradient(90deg, rgba(193, 202, 164, 0.055) 0, rgba(193, 202, 164, 0.055) 1px, transparent 1px, transparent 24px),
+    #17172b;
+}
+
+.autonomy-concept-name {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  width: 100%;
+  color: #c1caa4;
+  font-family: Arial, sans-serif;
+  font-size: clamp(1rem, 1.8vw, 1.45rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+  text-align: center;
+}
+
+.autonomy-concept-name span:first-child {
+  color: rgba(193, 202, 164, 0.56);
+  font-size: 0.62em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
 .publicbrief-tile-image {
   display: flex;
   align-items: center;
