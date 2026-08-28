@@ -20,7 +20,7 @@ body {
   width: 33vw;
   height: 100vh;
   flex-shrink: 0;
-  background: url('/static/tile-big.png') no-repeat;
+  background: url('/static/tile-big.png?v=terracotta-seamless') no-repeat;
   background-size: cover;
   background-position: center;
 }
