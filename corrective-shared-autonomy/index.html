@@ -244,29 +244,6 @@
         font-size: 0.88rem;
       }
 
-      .project-brief .source-card {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 24px;
-        padding: 22px 24px;
-        border-top: 3px solid var(--brief-sage);
-        background: rgba(193, 202, 164, 0.045);
-      }
-
-      .project-brief .source-copy h2 {
-        margin: 0 0 7px;
-        color: var(--brief-sage);
-        font-size: 1rem;
-      }
-
-      .project-brief .source-copy p {
-        margin: 0;
-        color: var(--brief-muted);
-        font-size: 0.86rem;
-        line-height: 1.5;
-      }
-
       .project-brief .closing-note {
         padding: 36px 0 0;
         color: var(--brief-muted);
@@ -307,10 +284,6 @@
           position: absolute;
         }
 
-        .project-brief .source-card {
-          align-items: flex-start;
-          flex-direction: column;
-        }
       }
 
       @media (max-width: 480px) {
@@ -318,9 +291,6 @@
           min-height: 0;
         }
 
-        .project-brief .source-card .action-link {
-          width: 100%;
-        }
       }
     </style>
   </head>
@@ -338,6 +308,9 @@
         <h1>Nudge</h1>
         <div class="project-identity">Corrective Shared Autonomy</div>
         <p class="subtitle">Investigating how sparse human corrections can communicate disagreement about a robot’s motion, plan, goal, or control authority.</p>
+        <div class="actions">
+          <a class="action-link" id="source-repository-link" href="#" target="_blank" rel="noopener noreferrer">View Source</a>
+        </div>
       </header>
 
       <div class="divider"></div>
@@ -500,19 +473,6 @@
             <span class="metric">Authority transitions</span>
           </div>
           <p style="margin-top: 18px;">These measures and the experimental design are provisional. Scenario definitions, operational metrics, and analysis procedures will be finalized after the integrated system is functioning and the simulation baseline is verified.</p>
-        </div>
-      </section>
-
-      <div class="divider"></div>
-
-      <section aria-labelledby="source-label">
-        <div class="section-label" id="source-label">Source</div>
-        <div class="source-card">
-          <div class="source-copy">
-            <h2>Nudge</h2>
-            <p>The public repository contains the current ROS 2/C++ foundation, specifications, configuration, robot description, tests, and simulation work.</p>
-          </div>
-          <a class="action-link" id="source-repository-link" href="#" target="_blank" rel="noopener noreferrer">View Source</a>
         </div>
       </section>
 
