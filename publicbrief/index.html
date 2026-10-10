@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PublicBrief DMV — tahaseen shaik</title>
-    <meta name="description" content="PublicBrief DMV makes consequential local-government decisions easier to understand before a final vote.">
+    <meta name="description" content="PublicBrief is a civic decision-support tool for residents.">
     <style>
       :root {
         --ink: #1c1c34;
@@ -292,6 +292,53 @@
         text-transform: uppercase;
       }
 
+      .project-status {
+        padding: clamp(44px, 7vw, 72px) 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .project-status-heading {
+        margin-bottom: 24px;
+        color: var(--accent);
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        line-height: 1.5;
+        text-transform: uppercase;
+      }
+
+      .project-status-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        border-top: 1px solid var(--line);
+        border-left: 1px solid var(--line);
+      }
+
+      .project-status-item {
+        min-height: 92px;
+        padding: 17px 18px;
+        border-right: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .project-status-label {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--accent);
+        font-size: 0.64rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        line-height: 1.35;
+        text-transform: uppercase;
+      }
+
+      .project-status-value {
+        color: var(--sage);
+        font-size: 0.92rem;
+        font-weight: 700;
+        line-height: 1.4;
+      }
+
       @media (max-width: 720px) {
         .shell { padding: 28px 20px 48px; }
         .topbar { align-items: flex-start; flex-direction: column; }
@@ -304,6 +351,12 @@
         .workflow-row { grid-template-columns: 1fr; gap: 8px; }
         .discipline-grid { grid-template-columns: 1fr; }
         .footer { flex-direction: column; }
+        .project-status-grid { grid-template-columns: 1fr 1fr; }
+      }
+
+      @media (max-width: 480px) {
+        .project-status-grid { grid-template-columns: 1fr; }
+        .project-status-item { min-height: 0; }
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -311,6 +364,7 @@
         *, *::before, *::after { transition: none !important; }
       }
     </style>
+    <link rel="stylesheet" href="/publicbrief/style.css">
   </head>
   <body>
     <main class="page">
@@ -328,64 +382,287 @@
             <span>Completed 2026</span>
           </div>
           <h1>PublicBrief<small>DMV</small></h1>
-          <p class="lead">Local government decisions, explained before they are final.</p>
+          <p class="descriptor">Civic decision intelligence for residents.</p>
+          <p class="lead">PublicBrief turns technical government materials into source-grounded explanations of what is being proposed, who is responsible, what remains unanswered, and how residents can participate before a decision is final.</p>
           <div class="actions">
             <a class="action-link" href="https://public-brief.vercel.app/" target="_blank" rel="noopener noreferrer">
-              Visit website
+              Open live application
             </a>
             <a class="action-link" href="https://github.com/tahaseens/public-brief" target="_blank" rel="noopener noreferrer">
-              View source
+              View GitHub repository
             </a>
           </div>
         </header>
 
-        <section class="section" aria-labelledby="overview-label">
-          <div class="section-key" id="overview-label">Overview</div>
-          <div class="prose">
-            <p>PublicBrief helps residents understand upcoming local-government decisions involving public money, surveillance, land use, infrastructure, and community services. It turns dense agendas, staff reports, and public notices into clear, source-grounded briefs before a hearing, contract award, or final vote.</p>
-            <p>The politically neutral prototype focuses on Loudoun County, Virginia. It identifies what is being proposed, who holds each decision-making role, what information may be missing, and how residents can participate—without recommending a political position.</p>
-          </div>
-        </section>
-
-        <section class="section" aria-labelledby="brief-label">
-          <div class="section-key" id="brief-label">Project brief</div>
-          <iframe
-            class="pdf-frame"
-            src="https://drive.google.com/file/d/1cT2CvaSwBVGwYSO5EZF885VLsz7UKXc8/preview"
-            title="PublicBrief project brief"
-            allow="autoplay"
-          ></iframe>
-        </section>
-
-        <section class="section" aria-labelledby="workflow-label">
-          <div class="section-key" id="workflow-label">Resident workflow</div>
-          <div class="workflow">
-            <div class="workflow-row">
-              <span class="workflow-title">Scan a locality</span>
-              <p class="workflow-copy">Browse source-linked briefs across public money, privacy, surveillance, and community infrastructure.</p>
+        <section class="project-status" aria-labelledby="project-status-heading">
+          <div class="project-status-heading" id="project-status-heading">Project status</div>
+          <div class="project-status-grid">
+            <div class="project-status-item">
+              <span class="project-status-label">Status</span>
+              <span class="project-status-value">Completed</span>
             </div>
-            <div class="workflow-row">
-              <span class="workflow-title">Analyze a document</span>
-              <p class="workflow-copy">Turn public text into a structured brief separating documented facts, implications, missing information, and evidence.</p>
+            <div class="project-status-item">
+              <span class="project-status-label">Year</span>
+              <span class="project-status-value">2026</span>
             </div>
-            <div class="workflow-row">
-              <span class="workflow-title">Act before the vote</span>
-              <p class="workflow-copy">Find decision roles, questions to ask, official participation routes, and a ready-to-edit public-comment draft.</p>
+            <div class="project-status-item">
+              <span class="project-status-label">Domain</span>
+              <span class="project-status-value">Civic technology</span>
+            </div>
+            <div class="project-status-item">
+              <span class="project-status-label">Availability</span>
+              <span class="project-status-value">Live web application</span>
             </div>
           </div>
         </section>
 
-        <section class="section" aria-labelledby="practice-label">
-          <div class="section-key" id="practice-label">Practice</div>
-          <div class="discipline-grid">
-            <div class="discipline">
-              <h2>Technical</h2>
-              <p>Next.js, React, TypeScript, OpenAI structured outputs, Zod validation, security controls, responsive interface design.</p>
+        <section class="section" aria-labelledby="problem-heading">
+          <div class="section-key">The problem</div>
+          <div class="section-body">
+            <h2 id="problem-heading">Important decisions are often hardest to understand before they are final.</h2>
+            <div class="prose">
+              <p>Local governments make consequential decisions involving land use, public revenue, infrastructure, procurement, community services, and surveillance technologies. The relevant information may be buried in long agendas, technical staff reports, procurement files, and public notices.</p>
+              <p>Institutional stakeholders often have dedicated resources for following these processes. Individual residents may only discover a proposal after a hearing, contract award, or vote. PublicBrief is designed to reduce that information imbalance without advocating for a political position.</p>
             </div>
-            <div class="discipline">
-              <h2>Policy &amp; product</h2>
-              <p>Civic-document comprehension, accountability mapping, source-grounded evidence design, public-participation workflows.</p>
+            <ol class="impact-list" aria-label="Resident outcomes">
+              <li>Find relevant local issues.</li>
+              <li>Understand the proposal and current status.</li>
+              <li>Separate documented facts from possible implications.</li>
+              <li>Identify who holds each decision-making role.</li>
+              <li>See what remains unanswered or unclear.</li>
+              <li>Find appropriate participation routes.</li>
+              <li>Prepare useful questions or public comments.</li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="workflow-heading">
+          <div class="section-key">How it works</div>
+          <div class="section-body">
+            <h2 id="workflow-heading">From a difficult source document to an informed next step.</h2>
+            <p class="section-intro">The locality feed is selective and manually curated from official sources. It is not a live scraper or a complete record of every government agenda.</p>
+            <div class="workflow">
+              <div class="workflow-row">
+                <span class="workflow-index">01</span>
+                <span class="workflow-title">Scan a locality</span>
+                <p class="workflow-copy">Browse selectively curated issues linked to official government agendas, staff reports, procurement postings, budgets, laws, and program pages.</p>
+              </div>
+              <div class="workflow-row">
+                <span class="workflow-index">02</span>
+                <span class="workflow-title">Analyze a document</span>
+                <p class="workflow-copy">Paste agenda, notice, resolution, or staff-report text to receive a structured brief grounded only in the submitted material.</p>
+              </div>
+              <div class="workflow-row">
+                <span class="workflow-index">03</span>
+                <span class="workflow-title">Move toward action</span>
+                <p class="workflow-copy">Review decision roles, participation opportunities, unresolved questions, official contacts, and a ready-to-edit public-comment draft.</p>
+              </div>
             </div>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="capabilities-heading">
+          <div class="section-key">Capabilities</div>
+          <div class="section-body">
+            <h2 id="capabilities-heading">Understanding is useful when it leads somewhere.</h2>
+            <p class="section-intro">The interface organizes a decision around what residents need to know, verify, question, and do—not around the structure of the original government document.</p>
+            <div class="capability-groups">
+              <div class="capability-group">
+                <h3>Understand the decision</h3>
+                <dl>
+                  <dt>At-a-glance summary</dt>
+                  <dd>A fast view of the decision, status, meeting date, decision-maker, and participation route.</dd>
+                  <dt>Proposal details</dt>
+                  <dd>Locations, affected groups, funding administration, implementation timing, and the action under consideration.</dd>
+                  <dt>Decision roles and accountability</dt>
+                  <dd>Separates the voting body, sponsoring department, applicant, committee, and public-contact roles.</dd>
+                  <dt>Perspective-specific relevance</dt>
+                  <dd>Reframes supported facts and cautious implications for a resident, parent, business owner, journalist, or advocate.</dd>
+                  <dt>Impact analysis</dt>
+                  <dd>Dedicated treatment of public money, privacy and surveillance, community, and infrastructure considerations.</dd>
+                  <dt>Dates, unknowns, and evidence</dt>
+                  <dd>Surfaces deadlines, missing information, and short source excerpts beside significant findings.</dd>
+                </dl>
+              </div>
+              <div class="capability-group">
+                <h3>Move toward participation</h3>
+                <dl>
+                  <dt>Questions residents can ask</dt>
+                  <dd>Neutral follow-up questions focused on unresolved details and accountable decision-making.</dd>
+                  <dt>Public-comment drafting</dt>
+                  <dd>A civil, editable draft that turns the brief into a practical starting point for participation.</dd>
+                  <dt>Curated official contacts</dt>
+                  <dd>Government directories, meeting pages, public-input instructions, and participation links maintained in application data.</dd>
+                  <dt>Copy-ready outputs</dt>
+                  <dd>Controls for copying the complete brief or the public-comment draft without sending anything automatically.</dd>
+                </dl>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="evidence-heading">
+          <div class="section-key">Product evidence</div>
+          <div class="section-body">
+            <h2 id="evidence-heading">A selective feed, a structured brief, and an action center.</h2>
+            <div class="evidence-grid">
+              <figure class="product-figure">
+                <img src="/static/projects/publicbrief/locality-feed.png" alt="PublicBrief locality feed showing curated issue cards and official-source links" loading="lazy">
+                <figcaption><strong>Locality issue feed</strong>Curated, source-linked issues are grouped by public money, privacy and surveillance, and community and infrastructure.</figcaption>
+              </figure>
+              <figure class="product-figure">
+                <img src="/static/projects/publicbrief/at-a-glance.png" alt="PublicBrief at-a-glance analysis summarizing a government decision" loading="lazy">
+                <figcaption><strong>At-a-glance analysis</strong>The five-second brief keeps the decision, status, meeting, decision-maker, and participation route together.</figcaption>
+              </figure>
+              <figure class="product-figure">
+                <img src="/static/projects/publicbrief/decision-evidence.png" alt="PublicBrief decision roles interface separating responsibility across named parties" loading="lazy">
+                <figcaption><strong>Decision roles</strong>Named responsibilities are separated by role so the interface does not imply that one official controls a collective decision.</figcaption>
+              </figure>
+              <figure class="product-figure">
+                <img src="/static/projects/publicbrief/action-center.png" alt="PublicBrief action center with resident questions and a public-comment draft" loading="lazy">
+                <figcaption><strong>Action center</strong>Unresolved questions and an editable public-comment draft turn comprehension into a concrete next step.</figcaption>
+              </figure>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="role-heading">
+          <div class="section-key">My work</div>
+          <div class="section-body">
+            <h2 id="role-heading">Product, policy, interface, and implementation.</h2>
+            <p class="section-intro">I defined the product and civic use case, selected and reviewed sources, designed the information model and interface, implemented the application, and established the safeguards around AI-assisted analysis. AI did not independently make product, editorial, or policy decisions.</p>
+            <div class="scope-grid">
+              <div class="scope-column">
+                <h3>Product and civic design</h3>
+                <ul class="plain-list">
+                  <li>Product definition and civic-use-case research</li>
+                  <li>Official-source curation and editorial review</li>
+                  <li>Information architecture and responsive interface design</li>
+                  <li>Accessibility improvements and participation workflows</li>
+                </ul>
+              </div>
+              <div class="scope-column">
+                <h3>AI and engineering</h3>
+                <ul class="plain-list">
+                  <li>Prompt and structured-output schema design</li>
+                  <li>Responsible-AI safeguards and source grounding</li>
+                  <li>API security, rate limiting, and cost controls</li>
+                  <li>Testing, production verification, and Vercel deployment</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="responsible-heading">
+          <div class="section-key">Responsible AI</div>
+          <div class="section-body">
+            <h2 id="responsible-heading">The model assists with structure; the source remains the authority.</h2>
+            <p class="section-intro">PublicBrief constrains document analysis to the material a resident submits and makes uncertainty visible instead of filling gaps with invented detail.</p>
+            <ul class="principles">
+              <li>Uses only the submitted document as evidence.</li>
+              <li>Treats pasted content as untrusted source material and ignores embedded instructions.</li>
+              <li>Separates documented facts from potential implications.</li>
+              <li>Identifies missing information rather than inventing it.</li>
+              <li>Shows short source excerpts near significant findings.</li>
+              <li>Does not recommend a political position or provide legal advice.</li>
+              <li>Validates requests and structured responses on the server.</li>
+              <li>Renders generated content as text, never arbitrary HTML.</li>
+              <li>Uses curated application data for actionable official links.</li>
+              <li>Reminds residents to verify details with the issuing government body.</li>
+            </ul>
+            <div class="notice"><strong>Data-use note.</strong> Submitted text is processed by the configured AI provider. Users are warned not to submit sensitive personal information. PublicBrief does not claim zero provider retention or guarantee that an AI-generated brief is complete.</div>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="technology-heading">
+          <div class="section-key">Technology</div>
+          <div class="section-body">
+            <h2 id="technology-heading">A small application with deliberate boundaries.</h2>
+            <div class="technology-grid">
+              <div class="technology-column">
+                <h3>Implementation</h3>
+                <ul class="plain-list">
+                  <li>Next.js App Router, React, and TypeScript</li>
+                  <li>Tailwind CSS and responsive interface design</li>
+                  <li>OpenAI Responses API with structured model output</li>
+                  <li>Zod request and response validation</li>
+                  <li>Server-side API route and Vercel deployment</li>
+                  <li>ESLint, TypeScript checking, automated security tests, and production build verification</li>
+                </ul>
+              </div>
+              <div class="technology-column">
+                <h3>Security and reliability</h3>
+                <ul class="plain-list">
+                  <li>The API key remains server-side and is never exposed to the browser.</li>
+                  <li>Input-size limits, per-IP prototype rate limiting, and hard request timeouts control misuse and cost.</li>
+                  <li>Malformed requests and invalid model responses fail with controlled errors.</li>
+                  <li>Prompt-injection defenses delimit documents as evidence rather than instructions.</li>
+                  <li>API responses use no-store caching, and the app sends restrictive security headers.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="notice"><strong>Tool usage.</strong> OpenAI tools assisted with implementation and structured document analysis. Product direction, source selection, editorial decisions, and deployment remain under human review.</div>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="scope-heading">
+          <div class="section-key">Current scope</div>
+          <div class="section-body">
+            <h2 id="scope-heading">Deployed functionality, with prototype limits stated plainly.</h2>
+            <div class="status-grid">
+              <div class="status-column">
+                <h3>Available now</h3>
+                <ul class="plain-list">
+                  <li>Loudoun County and Fairfax County locality views</li>
+                  <li>Selective, manually reviewed issue feeds linked to official sources</li>
+                  <li>Manual analysis of pasted government text</li>
+                  <li>Structured briefs, evidence excerpts, questions, contacts, and public-comment drafts</li>
+                  <li>Manual district selection with official directory links</li>
+                </ul>
+              </div>
+              <div class="status-column">
+                <h3>Not implemented</h3>
+                <ul class="plain-list">
+                  <li>Complete or continuous government-agenda monitoring</li>
+                  <li>Automatic representative matching or address collection</li>
+                  <li>User accounts, authentication, or a database</li>
+                  <li>PDF upload, URL parsing, or automatic PDF extraction</li>
+                  <li>Automatic email sending, saved briefs, or notifications</li>
+                  <li>Guaranteed AI accuracy; results still require official verification</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="future-heading">
+          <div class="section-key">Future direction</div>
+          <div class="section-body">
+            <h2 id="future-heading">From a curated prototype toward durable civic infrastructure.</h2>
+            <ol class="roadmap">
+              <li><span><strong>More DMV jurisdictions</strong>Expand coverage through small, testable locality-specific agenda-source adapters.</span></li>
+              <li><span><strong>Continuous monitoring</strong>Track official agendas and source changes while clearly exposing collection failures and coverage limits.</span></li>
+              <li><span><strong>Decision history</strong>Compare proposed language with final policy and preserve a traceable timeline of public decisions.</span></li>
+              <li><span><strong>Privacy-conscious district matching</strong>Help residents identify relevant representation without building an unnecessary address database.</span></li>
+              <li><span><strong>User-selected alerts</strong>Notify residents about chosen topics or jurisdictions only when they opt in.</span></li>
+              <li><span><strong>Additional source ingestion</strong>Support more document formats while maintaining evidence boundaries and validation.</span></li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="brief-heading">
+          <div class="section-key">Original brief</div>
+          <div class="section-body">
+            <h2 id="brief-heading">Project brief</h2>
+            <iframe
+              class="pdf-frame"
+              src="https://drive.google.com/file/d/1cT2CvaSwBVGwYSO5EZF885VLsz7UKXc8/preview"
+              title="PublicBrief project brief"
+              allow="autoplay"
+              loading="lazy"
+            ></iframe>
+            <p class="document-note">The embedded document records an earlier project framing. The case study above reflects the currently deployed product and verified repository state.</p>
           </div>
         </section>
 

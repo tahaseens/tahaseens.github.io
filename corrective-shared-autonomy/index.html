@@ -4,15 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/static/tab-icon.png">
-    <title>Corrective Shared Autonomy — tahaseen shaik</title>
-    <meta name="description" content="An in-progress shared autonomy and human-robot interaction project running on NVIDIA Jetson Orin Nano with ROS 2 and C++.">
-    <meta property="og:title" content="Corrective Shared Autonomy — tahaseen shaik">
-    <meta property="og:description" content="Exploring how physical human input can communicate corrections to autonomous robotic systems.">
+    <title>Nudge — Corrective Shared Autonomy | tahaseen shaik</title>
+    <meta name="description" content="Nudge is a simulation-first ROS 2 Jazzy and C++ research platform exploring how sparse Xbox-controller corrections can communicate disagreement about robot motion, plans, goals, or control authority.">
+    <meta property="og:title" content="Nudge — Corrective Shared Autonomy">
+    <meta property="og:description" content="Investigating how sparse human corrections can communicate disagreement about a robot’s motion, plan, goal, or control authority.">
     <meta property="og:url" content="https://tahaseens.github.io/corrective-shared-autonomy/">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Nudge — Corrective Shared Autonomy">
+    <meta name="twitter:description" content="A simulation-first ROS 2 Jazzy/C++ shared-autonomy research platform for a differential-drive ground robot.">
     <link rel="stylesheet" href="/static/project-brief.css">
     <style>
+      .project-brief .project-identity {
+        margin: 22px auto 0;
+        color: var(--brief-accent);
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
       .project-brief .status-strip {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -21,7 +32,7 @@
       }
 
       .project-brief .status-item {
-        min-height: 88px;
+        min-height: 96px;
         padding: 17px 18px;
         border-right: 1px solid var(--brief-line);
         border-bottom: 1px solid var(--brief-line);
@@ -31,7 +42,7 @@
         display: block;
         margin-bottom: 8px;
         color: var(--brief-accent);
-        font-size: 0.67rem;
+        font-size: 0.64rem;
         font-weight: 700;
         letter-spacing: 0.1em;
         text-transform: uppercase;
@@ -39,7 +50,7 @@
 
       .project-brief .status-value {
         color: var(--brief-sage);
-        font-size: 0.94rem;
+        font-size: 0.92rem;
         font-weight: 700;
         line-height: 1.4;
       }
@@ -57,33 +68,71 @@
       }
 
       .project-brief .development-note {
+        max-width: none;
         margin-top: 18px;
         padding: 14px 16px;
         border-left: 3px solid var(--brief-accent);
         background: rgba(193, 202, 164, 0.045);
         color: var(--brief-muted);
         font-size: 0.88rem;
-        line-height: 1.6;
+        line-height: 1.65;
       }
 
-      .project-brief .focus-tags {
+      .project-brief .focus-tags,
+      .project-brief .metric-list,
+      .project-brief .baseline-list {
         display: flex;
         flex-wrap: wrap;
         gap: 9px;
       }
 
-      .project-brief .focus-tag {
+      .project-brief .focus-tag,
+      .project-brief .metric,
+      .project-brief .baseline {
         padding: 9px 12px;
         border: 1px solid var(--brief-line);
         color: var(--brief-muted);
         font-size: 0.78rem;
         font-weight: 700;
-        line-height: 1;
+        line-height: 1.25;
       }
 
-      .project-brief .direction-note {
-        color: var(--brief-cream);
+      .project-brief .section-grid,
+      .project-brief .comparison-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .project-brief .state-card,
+      .project-brief .comparison-card,
+      .project-brief .evaluation-card {
+        padding: 20px;
+        border-top: 3px solid var(--brief-sage);
+        background: rgba(193, 202, 164, 0.04);
+      }
+
+      .project-brief .state-card.pending,
+      .project-brief .comparison-card:nth-child(2) {
+        border-top-color: var(--brief-accent);
+      }
+
+      .project-brief .card-label {
+        margin-bottom: 12px;
+        color: var(--brief-accent);
+        font-size: 0.68rem;
         font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .project-brief .state-card p,
+      .project-brief .comparison-card p,
+      .project-brief .evaluation-card p {
+        margin: 0;
+        color: var(--brief-muted);
+        font-size: 0.94rem;
+        line-height: 1.65;
       }
 
       .project-brief .architecture {
@@ -91,62 +140,108 @@
         background:
           repeating-linear-gradient(rgba(255, 255, 255, 0.035) 0, rgba(255, 255, 255, 0.035) 1px, transparent 1px, transparent 32px),
           repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.035) 0, rgba(255, 255, 255, 0.035) 1px, transparent 1px, transparent 32px);
-        padding: clamp(24px, 5vw, 42px);
+        padding: clamp(22px, 4vw, 36px);
+      }
+
+      .project-brief .architecture-kicker {
+        margin-bottom: 18px;
+        color: var(--brief-accent);
+        font-size: 0.67rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
       }
 
       .project-brief .architecture-flow {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.25fr) auto minmax(0, 1fr) auto minmax(0, 1.15fr);
+        grid-template-columns: minmax(90px, 0.8fr) auto minmax(105px, 0.95fr) auto minmax(130px, 1.2fr) auto minmax(140px, 1.3fr) auto minmax(105px, 0.95fr) auto minmax(90px, 0.8fr);
         align-items: stretch;
-        gap: 12px;
+        gap: 8px;
       }
 
       .project-brief .architecture-node {
         display: flex;
         align-items: center;
         justify-content: center;
-        min-height: 72px;
-        padding: 12px;
+        min-height: 82px;
+        padding: 12px 10px;
         border-top: 3px solid var(--brief-sage);
         background: var(--brief-ink);
         color: var(--brief-sage);
-        font-size: 0.78rem;
+        font-size: 0.72rem;
         font-weight: 700;
         line-height: 1.35;
         text-align: center;
       }
 
-      .project-brief .architecture-node:nth-of-type(4n + 3) {
+      .project-brief .architecture-node.interpretation,
+      .project-brief .architecture-node.safety {
         border-top-color: var(--brief-accent);
       }
 
       .project-brief .architecture-arrow {
         align-self: center;
         color: var(--brief-accent);
-        font-size: 1.2rem;
+        font-size: 1rem;
         font-weight: 700;
       }
 
-      .project-brief .compute-platform {
-        width: fit-content;
-        margin: 28px auto 0;
-        padding: 10px 14px;
-        border: 1px solid var(--brief-accent);
-        color: var(--brief-accent);
-        font-size: 0.69rem;
-        font-weight: 700;
-        letter-spacing: 0.1em;
-        text-align: center;
+      .project-brief .current-baseline {
+        margin-top: 24px;
+        padding: 16px;
+        border-left: 3px solid var(--brief-sage);
+        background: var(--brief-ink);
+      }
+
+      .project-brief .current-baseline strong {
+        display: block;
+        margin-bottom: 6px;
+        color: var(--brief-sage);
+        font-size: 0.74rem;
+        letter-spacing: 0.08em;
         text-transform: uppercase;
       }
 
-      .project-brief .compute-platform::before {
-        display: block;
-        width: 1px;
-        height: 28px;
-        margin: -39px auto 10px;
-        background: var(--brief-accent);
-        content: "";
+      .project-brief .current-baseline span {
+        color: var(--brief-muted);
+        font-size: 0.86rem;
+        line-height: 1.55;
+      }
+
+      .project-brief .roadmap {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        border-top: 1px solid var(--brief-line);
+        border-left: 1px solid var(--brief-line);
+      }
+
+      .project-brief .roadmap-item {
+        padding: 20px;
+        border-right: 1px solid var(--brief-line);
+        border-bottom: 1px solid var(--brief-line);
+      }
+
+      .project-brief .roadmap-month {
+        margin-bottom: 10px;
+        color: var(--brief-accent);
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .project-brief .roadmap-item p {
+        margin: 0;
+        color: var(--brief-muted);
+        font-size: 0.9rem;
+        line-height: 1.6;
+      }
+
+      .project-brief .future-note {
+        max-width: none;
+        margin-top: 18px;
+        color: var(--brief-muted);
+        font-size: 0.88rem;
       }
 
       .project-brief .source-card {
@@ -181,17 +276,51 @@
         text-align: center;
       }
 
-      @media (max-width: 760px) {
-        .project-brief .status-strip { grid-template-columns: 1fr 1fr; }
-        .project-brief .architecture-flow { grid-template-columns: 1fr; }
-        .project-brief .architecture-arrow { justify-self: center; transform: rotate(90deg); }
-        .project-brief .source-card { align-items: flex-start; flex-direction: column; }
+      @media (max-width: 960px) {
+        .project-brief .architecture-flow {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 10px;
+        }
+
+        .project-brief .architecture-arrow {
+          display: none;
+        }
+      }
+
+      @media (max-width: 720px) {
+        .project-brief .status-strip,
+        .project-brief .section-grid,
+        .project-brief .comparison-grid,
+        .project-brief .roadmap {
+          grid-template-columns: 1fr;
+        }
+
+        .project-brief .architecture-flow {
+          grid-template-columns: 1fr;
+        }
+
+        .project-brief .architecture-node {
+          min-height: 64px;
+        }
+
+        .project-brief .architecture-node:not(:last-of-type)::after {
+          position: absolute;
+        }
+
+        .project-brief .source-card {
+          align-items: flex-start;
+          flex-direction: column;
+        }
       }
 
       @media (max-width: 480px) {
-        .project-brief .status-strip { grid-template-columns: 1fr; }
-        .project-brief .status-item { min-height: 0; }
-        .project-brief .source-card .action-link { width: 100%; }
+        .project-brief .status-item {
+          min-height: 0;
+        }
+
+        .project-brief .source-card .action-link {
+          width: 100%;
+        }
       }
     </style>
   </head>
@@ -203,10 +332,12 @@
         <div class="meta-row">
           <span class="tag">Shared Autonomy</span>
           <span class="tag">Human-Robot Interaction</span>
-          <span class="year">In Progress · 2026–</span>
+          <span class="tag">Simulation-first</span>
+          <span class="year">In progress</span>
         </div>
-        <h1>Corrective Shared Autonomy</h1>
-        <p class="subtitle">Exploring how physical human input can communicate corrections to autonomous robotic systems.</p>
+        <h1>Nudge</h1>
+        <div class="project-identity">Corrective Shared Autonomy</div>
+        <p class="subtitle">Investigating how sparse human corrections can communicate disagreement about a robot’s motion, plan, goal, or control authority.</p>
       </header>
 
       <div class="divider"></div>
@@ -216,67 +347,98 @@
         <div class="status-strip">
           <div class="status-item">
             <span class="status-label">Status</span>
-            <span class="status-value live">In Progress</span>
+            <span class="status-value live">In progress</span>
           </div>
           <div class="status-item">
-            <span class="status-label">Estimated Completion</span>
-            <span class="status-value">September 16, 2026</span>
+            <span class="status-label">Target v0.1 completion</span>
+            <span class="status-value">November–December 2026</span>
           </div>
           <div class="status-item">
-            <span class="status-label">Platform</span>
-            <span class="status-value">NVIDIA Jetson Orin Nano</span>
+            <span class="status-label">Current platform</span>
+            <span class="status-value">Simulation-first</span>
           </div>
           <div class="status-item">
-            <span class="status-label">Primary Framework</span>
-            <span class="status-value">ROS 2</span>
+            <span class="status-label">Core stack</span>
+            <span class="status-value">ROS 2 Jazzy · C++</span>
           </div>
           <div class="status-item">
-            <span class="status-label">Primary Language</span>
-            <span class="status-value">C++</span>
+            <span class="status-label">Simulation baseline</span>
+            <span class="status-value">Gazebo Harmonic · Nav2 · AMCL · RViz</span>
           </div>
           <div class="status-item">
-            <span class="status-label">Domain</span>
-            <span class="status-value">HRI / Shared Autonomy</span>
+            <span class="status-label">Robot / input</span>
+            <span class="status-value">Differential-drive ground robot · Xbox controller</span>
           </div>
         </div>
-        <p class="development-note">This project is currently under active development. Additional technical details, architecture, experiments, and results will be added as the system is implemented.</p>
+        <p class="development-note">The repository contains a working foundation and a known-map autonomous simulation baseline, but that baseline still requires runtime verification. Semantic interpretation and integrated shared-autonomy behavior remain to be implemented. No experimental results or validated research claims exist yet.</p>
       </section>
 
       <div class="divider"></div>
 
       <section class="abstract" aria-labelledby="overview-label">
         <div class="section-label" id="overview-label">Overview</div>
-        <p>This project explores shared autonomy between a human operator and an autonomous robotic system, with an emphasis on using physical corrective input as more than direct teleoperation. The goal is to investigate how sparse human interventions can influence autonomous behavior while allowing the system to retain meaningful autonomy.</p>
-        <p>The system will run on an NVIDIA Jetson Orin Nano using ROS 2, with the core robotics and autonomy components implemented primarily in C++. Initial interaction will use physical controller input, such as an Xbox controller or mouse, to explore corrective control, human-autonomy disagreement, and dynamic allocation of control authority.</p>
+        <p>Nudge is a ROS 2 Jazzy and C++ research platform for a differential-drive ground robot operating in urban search-and-rescue-inspired environments. It asks whether sparse Xbox-controller corrections can communicate disagreement about the robot’s motion, plan, goal, or control authority—and how autonomy should respond without reducing every intervention to continuous teleoperation.</p>
+        <p>The project is simulation-first. Initial development uses Gazebo Harmonic with Nav2, AMCL, and RViz. Partially known environments are the intended research setting, extending beyond the current known-map navigation baseline.</p>
       </section>
 
       <div class="divider"></div>
 
-      <section aria-labelledby="technical-focus-label">
-        <div class="section-label" id="technical-focus-label">Technical focus</div>
-        <div class="focus-tags" aria-label="Technologies and engineering areas">
-          <span class="focus-tag">NVIDIA Jetson Orin Nano</span>
-          <span class="focus-tag">ROS 2</span>
-          <span class="focus-tag">C++</span>
-          <span class="focus-tag">Python tooling</span>
-          <span class="focus-tag">Shared autonomy</span>
-          <span class="focus-tag">Human-robot interaction</span>
-          <span class="focus-tag">Motion planning and control</span>
-          <span class="focus-tag">Game-controller integration</span>
-          <span class="focus-tag">Real-time robotics software</span>
-          <span class="focus-tag">Control arbitration</span>
-          <span class="focus-tag">Simulation and visualization</span>
-          <span class="focus-tag">Telemetry and experimental logging</span>
+      <section aria-labelledby="current-state-label">
+        <div class="section-label" id="current-state-label">What exists now</div>
+        <div class="section-grid">
+          <article class="state-card">
+            <div class="card-label">Implemented foundation</div>
+            <p>Repository scaffolding, package and interface boundaries, configuration contracts, state-machine primitives, robot description, logging structures, and a known-map autonomous simulation baseline.</p>
+          </article>
+          <article class="state-card pending">
+            <div class="card-label">Still to verify and build</div>
+            <p>Runtime verification of the navigation baseline, correction detection, semantic interpretation, authority arbitration, independent safety integration, and complete shared-autonomy behavior.</p>
+          </article>
         </div>
       </section>
 
       <div class="divider"></div>
 
-      <section class="abstract" aria-labelledby="direction-label">
-        <div class="section-label" id="direction-label">Current direction</div>
-        <p>The initial direction focuses on a robotic system capable of operating autonomously while accepting intermittent physical corrections from a human operator. Rather than treating every controller input as continuous manual control, the project will explore ways for those interventions to influence subsequent autonomous behavior.</p>
-        <p>Areas currently being investigated include corrective control, human-autonomy disagreement, adaptive control authority, and interpretation of intervention patterns at different levels of robot behavior.</p>
-        <p class="direction-note"><strong>More details coming as the project is fleshed out.</strong></p>
+      <section aria-labelledby="research-approach-label">
+        <div class="section-label" id="research-approach-label">Research approach</div>
+        <div class="comparison-grid">
+          <article class="comparison-card">
+            <div class="card-label">Explicit condition</div>
+            <p>The operator supplies a semantic label with each correction, identifying disagreement about motion, plan, goal, or control authority.</p>
+          </article>
+          <article class="comparison-card">
+            <div class="card-label">Implicit condition</div>
+            <p>The system interprets the correction using deterministic heuristics and observable context rather than an operator-provided semantic label.</p>
+          </article>
+        </div>
+        <p class="development-note">Both conditions are planned to use the same downstream assistance architecture so the interpretation method is the primary difference.</p>
+        <div class="card-label" style="margin-top: 24px;">Planned comparison baselines</div>
+        <div class="baseline-list" aria-label="Planned comparison baselines">
+          <span class="baseline">Manual control</span>
+          <span class="baseline">Full autonomy</span>
+          <span class="baseline">Fixed blending</span>
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <section aria-labelledby="technical-focus-label">
+        <div class="section-label" id="technical-focus-label">Platform and technical focus</div>
+        <div class="focus-tags" aria-label="Current technologies and engineering areas">
+          <span class="focus-tag">ROS 2 Jazzy</span>
+          <span class="focus-tag">C++</span>
+          <span class="focus-tag">Gazebo Harmonic</span>
+          <span class="focus-tag">Nav2</span>
+          <span class="focus-tag">AMCL</span>
+          <span class="focus-tag">RViz</span>
+          <span class="focus-tag">Xbox controller</span>
+          <span class="focus-tag">Shared autonomy</span>
+          <span class="focus-tag">Human-robot interaction</span>
+          <span class="focus-tag">Authority arbitration</span>
+          <span class="focus-tag">Safety separation</span>
+          <span class="focus-tag">Telemetry and logging</span>
+        </div>
+        <p class="future-note"><strong>Future extensions:</strong> physical deployment on NVIDIA Jetson Orin Nano hardware and an NVIDIA Isaac Sim backend. Neither is part of the current simulation baseline.</p>
       </section>
 
       <div class="divider"></div>
@@ -284,16 +446,60 @@
       <section aria-labelledby="architecture-label">
         <div class="section-label" id="architecture-label">Architecture preview</div>
         <div class="architecture">
-          <div class="architecture-flow" aria-label="Human Controller to ROS 2 Shared-Autonomy Stack to Planning and Control to Simulated or Physical Robot">
-            <div class="architecture-node">Human Controller</div>
+          <div class="architecture-kicker">Planned shared-autonomy architecture</div>
+          <div class="architecture-flow" aria-label="Xbox controller input to correction detection to explicit or heuristic interpretation to autonomy and authority arbitration to an independent safety layer to the robot">
+            <div class="architecture-node">Xbox Controller Input</div>
             <div class="architecture-arrow" aria-hidden="true">→</div>
-            <div class="architecture-node">ROS 2 Shared-Autonomy Stack</div>
+            <div class="architecture-node">Correction Detection</div>
             <div class="architecture-arrow" aria-hidden="true">→</div>
-            <div class="architecture-node">Planning / Control</div>
+            <div class="architecture-node interpretation">Explicit Labels / Deterministic Heuristics</div>
             <div class="architecture-arrow" aria-hidden="true">→</div>
-            <div class="architecture-node">Simulated or Physical Robot</div>
+            <div class="architecture-node">Autonomy + Authority Arbitration</div>
+            <div class="architecture-arrow" aria-hidden="true">→</div>
+            <div class="architecture-node safety">Independent Safety Layer</div>
+            <div class="architecture-arrow" aria-hidden="true">→</div>
+            <div class="architecture-node">Robot</div>
           </div>
-          <div class="compute-platform">Primary onboard compute · NVIDIA Jetson Orin Nano</div>
+          <div class="current-baseline">
+            <strong>Current simulation baseline</strong>
+            <span>Known-map autonomous navigation using Gazebo Harmonic, Nav2, AMCL, and RViz. Runtime verification is still pending; the shared-autonomy path above is planned.</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <section aria-labelledby="roadmap-label">
+        <div class="section-label" id="roadmap-label">Tentative v0.1 roadmap</div>
+        <div class="roadmap">
+          <article class="roadmap-item">
+            <div class="roadmap-month">October</div>
+            <p>Validate simulation and navigation behavior, then verify Xbox-controller integration.</p>
+          </article>
+          <article class="roadmap-item">
+            <div class="roadmap-month">November</div>
+            <p>Implement correction detection, explicit and implicit interpretation, and authority arbitration.</p>
+          </article>
+          <article class="roadmap-item">
+            <div class="roadmap-month">December</div>
+            <p>Evaluate scenarios, analyze telemetry and logs, and document the v0.1 system.</p>
+          </article>
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <section aria-labelledby="evaluation-label">
+        <div class="section-label" id="evaluation-label">Evaluation direction</div>
+        <div class="evaluation-card">
+          <div class="metric-list" aria-label="Provisional evaluation measures">
+            <span class="metric">Task success</span>
+            <span class="metric">Completion time</span>
+            <span class="metric">Operator intervention</span>
+            <span class="metric">Interpretation accuracy</span>
+            <span class="metric">Authority transitions</span>
+          </div>
+          <p style="margin-top: 18px;">These measures and the experimental design are provisional. Scenario definitions, operational metrics, and analysis procedures will be finalized after the integrated system is functioning and the simulation baseline is verified.</p>
         </div>
       </section>
 
@@ -303,16 +509,16 @@
         <div class="section-label" id="source-label">Source</div>
         <div class="source-card">
           <div class="source-copy">
-            <h2>Corrective Shared Autonomy</h2>
-            <p>The project repository will be published as implementation develops.</p>
+            <h2>Nudge</h2>
+            <p>The public repository contains the current ROS 2/C++ foundation, specifications, configuration, robot description, tests, and simulation work.</p>
           </div>
-          <a class="action-link" id="source-repository-link" href="#" target="_blank" rel="noopener noreferrer">Source Repository — Coming Soon</a>
+          <a class="action-link" id="source-repository-link" href="#" target="_blank" rel="noopener noreferrer">View Source</a>
         </div>
       </section>
 
       <div class="divider"></div>
 
-      <footer class="closing-note">In progress · Architecture, experiments, and results will be added as development continues.</footer>
+      <footer class="closing-note">In progress · Targeting v0.1 in November–December 2026 · No experimental results yet.</footer>
     </main>
 
     <script src="/static/project-data.js"></script>
@@ -320,9 +526,9 @@
       const project = window.PORTFOLIO_PROJECTS.correctiveSharedAutonomy;
       const sourceLink = document.getElementById('source-repository-link');
       sourceLink.href = project.repositoryUrl;
-      sourceLink.textContent = project.repositoryStatus === 'coming-soon'
-        ? 'Source Repository — Coming Soon'
-        : 'View Source';
+      sourceLink.textContent = project.repositoryStatus === 'public'
+        ? 'View Source'
+        : 'Source Repository — Coming Soon';
     </script>
   </body>
 </html>

@@ -303,9 +303,16 @@ body {
 }
 
 .autonomy-concept-name span:first-child {
+  color: #c1caa4;
+  font-size: 1.15em;
+  letter-spacing: -0.045em;
+}
+
+.autonomy-concept-name span:last-child {
   color: rgba(193, 202, 164, 0.56);
-  font-size: 0.62em;
-  letter-spacing: 0.1em;
+  font-size: 0.5em;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
   text-transform: uppercase;
 }
 
